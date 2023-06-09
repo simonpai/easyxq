@@ -1,0 +1,106 @@
+.board {
+  position: relative;
+  height: 550px;
+  aspect-ratio: 1;
+  text-align: center;
+
+  .board__plate {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    padding: 4.5454545%;
+    background-color: var(--fiberboard);
+    border-radius: 4px;
+  }
+  .board__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .board__grid {
+    @include background;
+    width: 100%;
+    height: 100%;
+  }
+  svg.board__grid {
+    fill: none;
+    stroke: #333;
+  }
+  .mark {
+    @include disc;
+    width: 10%;
+    position: absolute;
+    z-index: 20;
+  
+    &::before {
+      content: '';
+      @include centered;
+      @include disc;
+      width: 40%;
+    }
+    &::after {
+      content: '';
+      @include centered;
+      @include disc;
+      width: 25%;
+    }
+    &.next {
+      z-index: 25;
+      cursor: pointer;
+  
+      &::before {
+        @include disc;
+        width: 40%;
+        box-shadow: 0 0 2px 1px #080, inset 0 0 1px 1px #080;
+      }
+    }
+    &.banned {
+      z-index: 25;
+      pointer-events: none;
+  
+      &::before,
+      &::after {
+        width: 30%;
+        height: 0;
+        box-shadow: 0 0 2px 1px #800;
+      }
+      &::before {
+        transform: translate(0, -50%) rotate(45deg);
+      }
+      &::after {
+        transform: translate(0, -50%) rotate(-45deg);
+      }
+    }
+    &.last {
+      pointer-events: none;
+      &::before {
+        @include disc;
+        width: 40%;
+        box-shadow: 0 0 2px 1px #fff, inset 0 0 1px 1px #fff;
+      }
+      &::after {
+        @include disc;
+        width: 25%;
+        background-color: #fff;
+        box-shadow: 0 0 2px 1px #fff;
+      }
+    }
+  }
+  .piece {
+    @include disc;
+    width: 10%;
+    position: absolute;
+  
+    &.last-moved {
+      .piece__inner {
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.75), 0 0 4px 6px #fff;
+      }
+    }
+    &.selected {
+      .piece__inner {
+        transform: scale(1.2) !important;
+      }
+    }
+  }
+}

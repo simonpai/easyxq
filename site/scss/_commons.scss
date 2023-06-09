@@ -1,0 +1,36 @@
+.fiberboard {
+  background-color: var(--fiberboard);
+  border-radius: 4px;
+}
+
+.btn.btn-fiberboard-light {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #666;
+  background-color: var(--fiberboard-light);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.1s;
+  }
+}
+
+.btn.btn-fiberboard {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #666;
+  background-color: var(--fiberboard);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.1s;
+  }
+}

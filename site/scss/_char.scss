@@ -1,0 +1,38 @@
+.circled {
+  &[data-char="A"] {
+    transform: translateY(-2%);
+  }
+  &[data-char="E"] {
+    transform: translate(3%, -4%);
+  }
+  &[data-char="H"] {
+    transform: translateY(-4%);
+  }
+  &[data-char="R"] {
+    transform: translateY(-1%);
+  }
+  &[data-char="C"] {
+    transform: translate(2%, -6%);
+  }
+  &[data-char="P"] {
+    transform: translate(1%, -4%);
+  }
+  &[data-char="k"] {
+    transform: translate(3%, -3%);
+  }
+  &[data-char="a"] {
+    transform: translateY(-2%);
+  }
+  &[data-char="e"] {
+    transform: translate(-1%, -2%);
+  }
+  &[data-char="h"] {
+    transform: translateY(-3%);
+  }
+  &[data-char="c"] {
+    transform: translate(-3%, -3%);
+  }
+  &[data-char="p"] {
+    transform: translate(1%, -2%);
+  }
+}

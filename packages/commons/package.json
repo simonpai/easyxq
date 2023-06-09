@@ -1,0 +1,19 @@
+{
+  "name": "@easyxq/commons",
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "lib/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "npx uvu test"
+  },
+  "license": "MIT",
+  "contributors": [
+    "simonpai <simon.pai@gmail.com>"
+  ]
+}

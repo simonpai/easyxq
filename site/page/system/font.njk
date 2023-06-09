@@ -1,0 +1,65 @@
+---
+layout: app.njk
+---
+
+{% set pieces = [
+  ['帥', 'K'],
+  ['將', 'k'],
+  ['仕', 'A'],
+  ['士', 'a'],
+  ['相', 'E'],
+  ['象', 'e'],
+  ['陣', 'R'],
+  ['車', 'r'],
+  ['傌', 'H'],
+  ['馬', 'h'],
+  ['炮', 'C'],
+  ['包', 'c'],
+  ['兵', 'P'],
+  ['卒', 'p']
+] %}
+
+<style>
+  .main {
+    color: #fff;
+  }
+  .main .grid {
+    display: grid;
+    grid-template-columns: 260px 260px 260px 260px;
+    grid-template-rows: 260px;
+    gap: 1rem;
+    margin: 0.5rem 2rem;
+  }
+  .main .grid svg {
+    width: 256px;
+    height: 256px;
+  }
+  .main .grid .cell {
+    width: 260px;
+    height: 260px;
+    border: 2px solid #fff;
+  }
+  .main .grid .cell.text {
+    font-family: 'TW-Kai', 'TW-MOE-Std-Kai';
+    line-height: 256px;
+    font-size: 256px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+<div class="main">
+  <div class="grid">
+  {% for piece in pieces %}
+    <div class="cell text">
+      {{ piece[0] }}
+    </div>
+    <div class="cell svg">
+      <svg xmlns="http://www.w3.org/2000/svg" role="img"
+        viewbox="0 0 1024 1024" fill="currentColor" stroke="currentColor" stroke-width="3%">
+        <use xlink:href="{{ ['/img/pieces.svg#', piece[1]] | join | url }}"/>
+      </svg>
+    </div>
+  {% endfor %}
+  </div>
+</div>

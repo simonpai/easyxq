@@ -1,0 +1,78 @@
+.room {
+  --hud-width: 9rem;
+
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--hud-width) calc(100vh - 6rem) var(--hud-width);
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "left-hud board upper-right-hud"
+    "left-hud board lower-right-hud";
+  gap: 1.5rem;
+  justify-content: center;
+
+  .board {
+    grid-area: board;
+    height: 100%;
+  }
+  .left-hud,
+  .upper-right-hud,
+  .lower-right-hud {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .left-hud {
+    grid-area: left-hud;
+  }
+  .upper-right-hud {
+    grid-area: upper-right-hud;
+  }
+  .lower-right-hud {
+    grid-area: lower-right-hud;
+    justify-content: end;
+  }
+  .controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: stretch;
+    gap: 1rem;
+  }
+}
+
+// pieces controlled by UI
+.room.red-ui .piece.red,
+.room.black-ui .piece.black {
+  transition: all 0.1s;
+}
+.room.red-ui .board.red .piece.red,
+.room.black-ui .board.black .piece.black {
+  &:hover .piece__inner {
+    transform: scale(1.05);
+  }
+  cursor: pointer;
+}
+// pieces not controlled by UI
+.room:not(.red-ui) .piece.red,
+.room:not(.black-ui) .piece.black {
+  transition: all 0.35s;
+}
+
+.result {
+  @include backdrop;
+
+  &.closable {
+    cursor: pointer;
+  }
+
+  .result__message {
+    @include centered;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 4px #000;
+  }
+}

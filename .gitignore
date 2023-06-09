@@ -1,0 +1,23 @@
+# generated
+node_modules/
+dist/
+_site/
+examples/**/package-lock.json
+tsconfig*.json
+
+# env
+.env
+_local/
+
+# log
+*.log
+npm-debug.log*
+
+# cache
+.npm
+.eslintcache
+.parcel-cache
+
+# editor
+.vscode
+.DS_Store

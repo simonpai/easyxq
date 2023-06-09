@@ -1,0 +1,32 @@
+@mixin centered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+}
+@mixin disc {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+}
+@mixin backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+@mixin background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

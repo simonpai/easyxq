@@ -1,0 +1,56 @@
+
+.piece {
+  @include disc;
+  position: relative;
+
+  &.red {
+    color: var(--piece-red);
+
+    .piece__inner::before {
+      border-color: var(--piece-red);
+    }
+  }
+  &.black {
+    color: var(--piece-black);
+
+    .piece__inner::before {
+      border-color: var(--piece-black);
+    }
+  }
+  &.purple {
+    color: var(--piece-purple);
+
+    .piece__inner::before {
+      border-color: var(--piece-purple);
+    }
+  }
+  &.ringless {
+    .piece__inner::before {
+      display: none;
+    }
+    .piece--char {
+      width: 80%;
+    }
+  }
+  .piece__inner {
+    @include centered;
+    @include disc;
+    width: 85%;
+    border: 1px solid #666;
+    background-color: #f6f6f6;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+
+    &::before {
+      content: '';
+      @include centered;
+      @include disc;
+      width: 90%;
+      border: 2px solid transparent;
+    }
+  }
+  .piece--char {
+    @include centered;
+    aspect-ratio: 1;
+    width: 72.5%;
+  }
+}
