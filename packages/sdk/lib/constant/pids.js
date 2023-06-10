@@ -72,10 +72,6 @@ export function en(pid) {
   return pieces.en(piece(pid));
 }
 
-export function zh(pid) {
-  return pieces.zh(piece(pid));
-}
-
 // piece check //
 export function isRedKing(pid) {
   return pid === 10;
