@@ -11,11 +11,16 @@ export function evaluate(heuristic, { position, ply, lastPlies = [] }, { rules }
   ply = position.ply(from, to);
   lastPlies = lastPlies.map(parsePly);
 
-  const score = heuristic.evaluate(new Input({
+  const input = {
     context: new GameContext({ rules }),
     before: position,
-    ply,
     lastPlies,
+  };
+  input.t = createTools(input);
+
+  const score = heuristic.evaluate(new Input({
+    ...input,
+    ply,
   }));
   return Math.round(score);
 }
@@ -37,5 +42,19 @@ function parsePly(value) {
       return value;
     default:
       throw new Error(`Invalid ply format: ${value}`);
+  }
+}
+
+function createTools(input) {
+  const cache = new Map();
+  return {
+    memoize(key, fn) {
+      if (cache.has(key)) {
+        return cache.get(key);
+      }
+      const value = fn(input);
+      cache.set(key, value);
+      return value;
+    }
   }
 }

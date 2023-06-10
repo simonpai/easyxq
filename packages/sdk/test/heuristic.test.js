@@ -25,7 +25,7 @@ test('protect', () => {
   const ply = 'd8i8'; // 'c9e3'
   const heuristic = h.naive.protect();
   const score = tool.h.evaluate(heuristic, { position, ply, lastPlies: [] });
-  console.log(score); // TODO: should be 0
+  assert.is(score, 0);
 });
 
 test.run();
