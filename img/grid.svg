@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 1000 1000" stroke="#333" fill="none">
+  <defs>
+    <path id="rightstar" d="M 25 5 H 5 V 25 M 25 -5 H 5 V -25 M 25 5 Z" stroke-width="3" />
+    <use id="leftstar" href="#rightstar" transform="scale(-1 1)" />
+    <g id="star">
+      <use href="#rightstar" />
+      <use href="#leftstar" />
+    </g>
+  </defs>
+  <path d="
+    M 40 40 v 920 h 820 V 40 H 40
+    Z" stroke-width="9" />
+  <path d="
+    M 50 50 v 900 h 800 V 50 H 50 
+    M 50 150 h 800
+    M 50 250 h 800
+    M 50 350 h 800
+    M 50 450 h 800
+    M 50 550 h 800
+    M 50 650 h 800
+    M 50 750 h 800
+    M 50 850 h 800
+    M 150 50 v 400
+    M 250 50 v 400
+    M 350 50 v 400
+    M 450 50 v 400
+    M 550 50 v 400
+    M 650 50 v 400
+    M 750 50 v 400
+    M 150 550 v 400
+    M 250 550 v 400
+    M 350 550 v 400
+    M 450 550 v 400
+    M 550 550 v 400
+    M 650 550 v 400
+    M 750 550 v 400
+    M 350 50 l 200 200
+    M 550 50 l -200 200
+    M 350 750 l 200 200
+    M 550 750 l -200 200
+    Z" stroke-width="3" />
+  <g>
+    <use href="#rightstar" x="50" y="350" />
+    <use href="#star" x="250" y="350" />
+    <use href="#star" x="450" y="350" />
+    <use href="#star" x="650" y="350" />
+    <use href="#leftstar" x="850" y="350" />
+    <use href="#star" x="150" y="250" />
+    <use href="#star" x="750" y="250" />
+    <use href="#rightstar" x="50" y="650" />
+    <use href="#star" x="250" y="650" />
+    <use href="#star" x="450" y="650" />
+    <use href="#star" x="650" y="650" />
+    <use href="#leftstar" x="850" y="650" />
+    <use href="#star" x="150" y="750" />
+    <use href="#star" x="750" y="750" />
+  </g>
+</svg>
