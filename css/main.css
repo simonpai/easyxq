@@ -1,0 +1,510 @@
+@charset "UTF-8";
+:root {
+  --fiberboard: #ebd8ab;
+  --fiberboard-light: #f2ecde;
+  --piece-red: rgba(200, 0, 0, 0.9);
+  --piece-black: #333;
+  --piece-purple: rgba(150, 0, 170, 0.9);
+}
+
+footer {
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  color: #666;
+}
+
+.circled[data-char=A] {
+  transform: translateY(-2%);
+}
+.circled[data-char=E] {
+  transform: translate(3%, -4%);
+}
+.circled[data-char=H] {
+  transform: translateY(-4%);
+}
+.circled[data-char=R] {
+  transform: translateY(-1%);
+}
+.circled[data-char=C] {
+  transform: translate(2%, -6%);
+}
+.circled[data-char=P] {
+  transform: translate(1%, -4%);
+}
+.circled[data-char=k] {
+  transform: translate(3%, -3%);
+}
+.circled[data-char=a] {
+  transform: translateY(-2%);
+}
+.circled[data-char=e] {
+  transform: translate(-1%, -2%);
+}
+.circled[data-char=h] {
+  transform: translateY(-3%);
+}
+.circled[data-char=c] {
+  transform: translate(-3%, -3%);
+}
+.circled[data-char=p] {
+  transform: translate(1%, -2%);
+}
+
+.fiberboard {
+  background-color: var(--fiberboard);
+  border-radius: 4px;
+}
+
+.btn.btn-fiberboard-light {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #666;
+  background-color: var(--fiberboard-light);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+}
+.btn.btn-fiberboard-light:hover {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}
+
+.btn.btn-fiberboard {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #666;
+  background-color: var(--fiberboard);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+}
+.btn.btn-fiberboard:hover {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}
+
+.piece {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  position: relative;
+}
+.piece.red {
+  color: var(--piece-red);
+}
+.piece.red .piece__inner::before {
+  border-color: var(--piece-red);
+}
+.piece.black {
+  color: var(--piece-black);
+}
+.piece.black .piece__inner::before {
+  border-color: var(--piece-black);
+}
+.piece.purple {
+  color: var(--piece-purple);
+}
+.piece.purple .piece__inner::before {
+  border-color: var(--piece-purple);
+}
+.piece.ringless .piece__inner::before {
+  display: none;
+}
+.piece.ringless .piece--char {
+  width: 80%;
+}
+.piece .piece__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 85%;
+  border: 1px solid #666;
+  background-color: #f6f6f6;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+}
+.piece .piece__inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 90%;
+  border: 2px solid transparent;
+}
+.piece .piece--char {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1;
+  width: 72.5%;
+}
+
+.board {
+  position: relative;
+  height: 550px;
+  aspect-ratio: 1;
+  text-align: center;
+}
+.board .board__plate {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  padding: 4.5454545%;
+  background-color: var(--fiberboard);
+  border-radius: 4px;
+}
+.board .board__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.board .board__grid {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.board svg.board__grid {
+  fill: none;
+  stroke: #333;
+}
+.board .mark {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 10%;
+  position: absolute;
+  z-index: 20;
+}
+.board .mark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 40%;
+}
+.board .mark::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 25%;
+}
+.board .mark.next {
+  z-index: 25;
+  cursor: pointer;
+}
+.board .mark.next::before {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 40%;
+  box-shadow: 0 0 2px 1px #080, inset 0 0 1px 1px #080;
+}
+.board .mark.banned {
+  z-index: 25;
+  pointer-events: none;
+}
+.board .mark.banned::before, .board .mark.banned::after {
+  width: 30%;
+  height: 0;
+  box-shadow: 0 0 2px 1px #800;
+}
+.board .mark.banned::before {
+  transform: translate(0, -50%) rotate(45deg);
+}
+.board .mark.banned::after {
+  transform: translate(0, -50%) rotate(-45deg);
+}
+.board .mark.last {
+  pointer-events: none;
+}
+.board .mark.last::before {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 40%;
+  box-shadow: 0 0 2px 1px #fff, inset 0 0 1px 1px #fff;
+}
+.board .mark.last::after {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 25%;
+  background-color: #fff;
+  box-shadow: 0 0 2px 1px #fff;
+}
+.board .piece {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  user-select: none;
+  background: transparent;
+  width: 10%;
+  position: absolute;
+}
+.board .piece.last-moved .piece__inner {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75), 0 0 4px 6px #fff;
+}
+.board .piece.selected .piece__inner {
+  transform: scale(1.2) !important;
+}
+
+.room {
+  --hud-width: 9rem;
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--hud-width) calc(100vh - 6rem) var(--hud-width);
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "left-hud board upper-right-hud" "left-hud board lower-right-hud";
+  gap: 1.5rem;
+  justify-content: center;
+}
+.room .board {
+  grid-area: board;
+  height: 100%;
+}
+.room .left-hud,
+.room .upper-right-hud,
+.room .lower-right-hud {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: stretch;
+  gap: 1rem;
+}
+.room .left-hud {
+  grid-area: left-hud;
+}
+.room .upper-right-hud {
+  grid-area: upper-right-hud;
+}
+.room .lower-right-hud {
+  grid-area: lower-right-hud;
+  justify-content: end;
+}
+.room .controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.room.red-ui .piece.red,
+.room.black-ui .piece.black {
+  transition: all 0.1s;
+}
+
+.room.red-ui .board.red .piece.red,
+.room.black-ui .board.black .piece.black {
+  cursor: pointer;
+}
+.room.red-ui .board.red .piece.red:hover .piece__inner,
+.room.black-ui .board.black .piece.black:hover .piece__inner {
+  transform: scale(1.05);
+}
+
+.room:not(.red-ui) .piece.red,
+.room:not(.black-ui) .piece.black {
+  transition: all 0.35s;
+}
+
+.result {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.result.closable {
+  cursor: pointer;
+}
+.result .result__message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+}
+
+body.app {
+  height: 100%;
+  padding: 3rem;
+}
+body.app #root {
+  display: block;
+  height: 100%;
+}
+
+.home .lobby {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home .lobby .menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  width: 9rem;
+}
+
+.battle .lobby {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.battle .lobby .lobby__plate {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.color-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.color-options .color-options__option {
+  cursor: pointer;
+}
+.color-options .color-options__option:hover .piece {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}
+.color-options .color-options__option .piece {
+  width: 3rem;
+}
+.color-options .color-options__option.selected {
+  border-radius: 50%;
+  background-color: rgba(0, 128, 0, 0.75);
+}
+
+.bot-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.bot-options .bot-options__option {
+  padding: 0.3rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+.bot-options .bot-options__option .avatar {
+  width: 3rem;
+}
+.bot-options .bot-options__option:hover .avatar {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}
+.bot-options .bot-options__option.selected {
+  background-color: rgba(0, 128, 0, 0.75);
+}
+
+.avatar {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+}
+.avatar .avatar__frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #666;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.65);
+  padding: 0.25rem;
+}
+.avatar .avatar__inner {
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: inset 0 0 0.25rem rgba(0, 0, 0, 0.75);
+}
+.avatar .avatar__img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+.avatar.bronze .avatar__frame {
+  background: linear-gradient(to bottom, #CD7F32 0%, #BE7023 100%);
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.65), inset 0 0 0.25rem #fff;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Noto Sans TC", "蘋果儷中黑", "Apple LiGothic Medium", "微軟正黑體", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: #222;
+}
+
+/*# sourceMappingURL=main.css.map */
