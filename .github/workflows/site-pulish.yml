@@ -1,0 +1,31 @@
+name: site publish
+
+on: workflow_dispatch
+
+jobs:
+  site:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+#      - name: Get version
+#        id: version
+#        run: |
+#          VERSION=${{ github.event.workflow_dispatch.tag_name }}
+#          echo "::set-output name=version::$(echo $VERSION | sed -e 's/v//gI')"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: npm install
+      - run: git config --global user.name "${{ github.actor }}"
+      - run: git config --global user.email "github-action-${{ github.actor }}@users.noreply.github.com"
+#      - run: npm run version ${{ steps.version.outputs.version }}
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site/_site
+          allow_empty_commit: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
