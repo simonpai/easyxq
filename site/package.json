@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean": "npx rimraf dist && npx rimraf _site",
-    "build:11ty": "npx eleventy",
+    "build:11ty": "npx cross-env NODE_ENV=production npx eleventy",
     "start:11ty": "npx cross-env NODE_ENV=development npx eleventy --serve --port=23400",
     "build:sass": "npx sass scss:dist/css",
     "start:sass": "npx sass --watch scss:dist/css",

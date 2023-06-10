@@ -23,6 +23,9 @@ module.exports = function(config) {
   config.addNunjucksFilter('markdown', value => markdown.renderInline(value));
 
   config.addNunjucksGlobal('version', version);
+  if (process.env.NODE_ENV === 'production') {
+    config.addNunjucksGlobal('gaid', 'G-LS32PJ4JZJ');
+  }
   config.addGlobalData('layout', 'base.njk');
 
   return {
