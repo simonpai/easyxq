@@ -16,7 +16,7 @@ jobs:
         id: latesttag
         uses: actions-ecosystem/action-get-latest-tag@v1
         with:
-          fallback: dev
+          semver_only: true
       - name: Get version
         id: version
         run: |
