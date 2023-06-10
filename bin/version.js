@@ -52,7 +52,7 @@ const projectPathToModuleName = {};
 // first pass: collect some info
 for (const projectPath of projectPaths) {
   const project = readPackageFileSync(join(rootDir, projectPath));
-  !project.private && projects.push({ projectPath, project });
+  projects.push({ projectPath, project });
   projectPathToModuleName[projectPath] = project.name;
 }
 
@@ -69,11 +69,12 @@ function overwriteDependencyVersions(dependencies, version) {
 }
 
 // second pass: overwrite versions
-for (const { projectPath, project } of projects) {
+for (let { projectPath, project } of projects) {
   overwriteDependencyVersions(project.dependencies, version);
   overwriteDependencyVersions(project.devDependencies, version);
   overwriteDependencyVersions(project.peerDependencies, version);
-  project.version = version;
+  delete project.version;
+  project = { version, ...project };
   writePackageFileSync(join(rootDir, projectPath), project);
   writeVersionFile(projectPath, version);
 }

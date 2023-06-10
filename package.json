@@ -1,6 +1,7 @@
 {
   "name": "@easyxq/root",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/commons",
     "packages/sdk",
@@ -9,7 +10,7 @@
   "scripts": {
     "start": "npm run start --workspace=site",
     "test": "npm run test --workspaces --if-present",
-    "version": "node ./bin/version.mjs",
+    "version": "node ./bin/version.js",
     "build:clean": "npm run build:clean --workspaces --if-present",
     "build:esm": "npm run build:esm --workspaces --if-present",
     "build": "npm run build --workspaces --if-present"
