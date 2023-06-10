@@ -9,7 +9,7 @@
     "start:sass": "npx sass --watch scss:dist/css",
     "build:js": "npx webpack --mode production",
     "start:js": "npx webpack --watch --mode development",
-    "build": "npm exec -- npm-run-all clean --parallel build:*",
+    "build": "npm run clean && npm run build:sass && npm run build:js && npm run build:11ty",
     "start": "npm exec -- npm-run-all clean --parallel start:*"
   },
   "dependencies": {

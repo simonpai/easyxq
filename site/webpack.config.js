@@ -36,5 +36,5 @@ module.exports = {
       PATH_PREFIX: JSON.stringify('/easyxq/'),
     }),
   ],
-  devtool: 'eval',
+  //devtool: 'eval',
 };
