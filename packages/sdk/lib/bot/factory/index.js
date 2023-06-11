@@ -7,9 +7,14 @@ export * from './configurations.js';
 export { default as presets } from './presets.js';
 
 export function build(config) {
-  const { abilities = {}, preferences = {}, rules } = config = normalize(config);
+  const { abilities: { win, ...abilities } = {}, preferences = {}, rules } = config = normalize(config);
   // TODO: ad-hoc
-  const abilityKeys = Object.keys(abilities);
+  // move win() to the front
+  let abilityKeys = Object.keys(abilities);
+  if (win > 0) {
+    abilityKeys = ['win', ...abilityKeys];
+  }
+
   if (abilityKeys.length === 0) {
     return new simple.Bot(new simple.RandomEngine());
   }
@@ -18,7 +23,7 @@ export function build(config) {
   heuristic = postProcessHeuristics(heuristic, config);
 
   return new simple.Bot(new simple.HeuristicRandomEngine({
-    rules,
+    config,
     heuristic,
   }));
 }
@@ -57,6 +62,7 @@ function buildHeuristicAxis(key, valuing, preference) {
 }
 
 function postProcessHeuristics(heuristic, { abilities }) {
+  // soft bans
   const bans = [];
   if (abilities.chase > 0) {
     bans.push({
@@ -72,7 +78,7 @@ function postProcessHeuristics(heuristic, { abilities }) {
     });
   }
   if (bans.length > 0) {
-    return heuristic.softbans(bans);
+    heuristic = heuristic.softbans(bans);
   }
   return heuristic;
 }

@@ -17,3 +17,15 @@ export function sortBy(array, fn) {
   array.sort((a, b) => fn(a) - fn(b));
   return array;
 }
+
+// Fisher–Yates
+export function shuffle(array) {
+  for (let i = array.length; i > 1;) {
+    const j = Math.floor(Math.random() * i);
+    i--;
+    if (i !== j) {
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  return array;
+}

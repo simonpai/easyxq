@@ -16,3 +16,10 @@ const ZERO = new Variable(() => 0, {
     return this;
   },
 });
+
+export function constant(value) {
+  return new Variable(() => value, {
+    name: String(value),
+    zero: value === 0,
+  });
+}

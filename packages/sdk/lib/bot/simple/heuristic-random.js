@@ -1,23 +1,25 @@
+import { shuffle, sortBy } from '@easyxq/commons';
 import { GameContext } from '../../room/index.js';
-import { searchIndex } from '../../helpers/index.js';
 import Input from './input.js';
 
 export default class HeuristicRandomEngine {
 
   #context;
+  #config;
   #heuristic;
 
-  constructor({ rules, heuristic } = {}) {
+  constructor({ config, heuristic } = {}) {
+    const { rules } = config;
     this.#context = new GameContext({ rules });
+    this.#config = config || {};
     this.#heuristic = heuristic || (() => 0);
   }
 
   async next({ position, plies }) {
     const context = this.#context;
-    const candidates = context.queries(position).nextLegalPlies;
+    const nextPlies = shuffle(context.queries(position).nextLegalPlies);
     const lastPlies = plies.slice(-2);
     lastPlies.reverse();
-
     
     let input = {
       context,
@@ -26,37 +28,50 @@ export default class HeuristicRandomEngine {
     };
     input.t = createTools(input);
 
-    let i = 0;
-    let max = -Infinity;
-    let sum = 0;
-    const thresholds = [];
+    let winningPly;
+    let useWinningPly = false;
     const entries = [];
-    for (const ply of candidates) {
+    for (const ply of nextPlies) {
       const score = this.#evaluate(new Input({ ...input, ply }));
-      if (score > max) {
-        max = score;
+      if (score === Infinity) { // win
+        const { preferences } = this.#config;
+        if (winningPly) {
+          continue;
+        }
+        winningPly = ply;
+        if (Math.random() < (preferences.win || 1)) {
+          useWinningPly = true;
+          break;
+        }
       }
-      sum += 2 ** (score / 10);
-      thresholds.push(sum);
       entries.push({
-        index: i++,
         score,
         ply,
       });
     }
+    if (winningPly && (useWinningPly || entries.length === 0)) {
+      this.#log(input, Infinity, { ply: winningPly, score: Infinity });
+      return winningPly;
+    }
 
-    const index = searchIndex(thresholds, Math.random() * sum);
+    sortBy(entries, en => -en.score);
+    const index = Math.min(Math.floor(-Math.log2(Math.random())), entries.length - 1);
     const entry = entries[index];
-    const { ply } = entry;
 
-    console.log(position.fen, lastPlies.map(ply => ply.code));
-    console.log(`${ply}: ${entry.score}${entry.score === max ? ' (best)' : `(best = ${max})`} = ${this.#heuristic.explain(new Input({ ...input, ply }))}`);
+    this.#log(input, winningPly ? Infinity : entries[0].score, entry);
 
-    return ply;
+    return entry.ply;
   }
 
   #evaluate(input) {
     return Math.round(this.#heuristic.evaluate(input));
+  }
+
+  #log(input, max, entry) {
+    // TODO
+    const { ply } = entry;
+    console.log(input.before.fen, input.lastPlies.map(ply => ply.code));
+    console.log(`${ply}: ${formatScore(entry.score)} ${entry.score === max ? '(best)' : `(best = ${formatScore(max)})`} = ${this.#heuristic.explain(new Input({ ...input, ply }))}`);
   }
 
 }
@@ -73,4 +88,8 @@ function createTools(input) {
       return value;
     }
   }
+}
+
+function formatScore(value) {
+  return value === Infinity ? 'win' : `${value}`;
 }
