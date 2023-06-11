@@ -1,7 +1,13 @@
 {
-  "battle": "開局",
+  "battle": "對戰",
   "battle-settings": "遊戲設定",
   "start": "開始",
   "takeback": "悔棋",
-  "quit": "退出"
+  "quit": "退出",
+  "red": "紅",
+  "black": "黑",
+  "checkmate": "將死",
+  "stalemate": "困斃",
+  "win-phrase": "{{ winner }}勝：{{ reason }}",
+  "draw-phrase": "和棋：{{ reason }}"
 }

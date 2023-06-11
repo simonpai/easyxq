@@ -3,5 +3,11 @@
   "battle-settings": "Game Settings",
   "start": "Start",
   "takeback": "Takeback",
-  "quit": "Quit"
+  "quit": "quit",
+  "red": "red",
+  "black": "black",
+  "checkmate": "checkmate",
+  "stalemate": "stalemate",
+  "win-phrase": "{{ winner, uppercase }} wins by {{ reason }}.",
+  "draw-phrase": "Draw by {{ reason }}."
 }
