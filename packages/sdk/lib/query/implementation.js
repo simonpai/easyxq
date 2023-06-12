@@ -55,7 +55,7 @@ export function calls(rules, position) {
 }
 
 export function result(rules, position) {
-  return _calls.getResult(this.calls(rules, position));
+  return _calls.getResult(calls(rules, position));
 }
 
 /**
