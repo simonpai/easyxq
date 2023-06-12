@@ -48,11 +48,11 @@ export function dodge({ valuing = DEFAULT_VALUING } = {}) {
 
     // only count in unfocused penalty on before position
     // for you'd definitely notice if you move a piece into a hanging square
-    let score = getHangingPieceValue(valueFn, before, pid);
+    let score = getThreatedScore(valueFn, before, pid);
     if (!focused) {
       score *= UNFOCUSED_PENALTY;
     }
-    return score - getHangingPieceValue(valueFn, after, pid);
+    return score - getThreatedScore(valueFn, after, pid);
   });
 }
 
@@ -164,8 +164,30 @@ function getChaseScore(valueFn, position, pid) {
   return 0;
 }
 
-function getHangingPieceValue(fn, position, pid) {
-  return isHangingPiece(position, pid) ? fn(position, pid) : 0;
+function getHangingPieceScore(fn, position, pid) {
+    // TODO: count in the value difference
+    // its own score - min of attacking piece score
+    return isHangingPiece(position, pid) ? fn(position, pid) : 0;
+}
+
+function getThreatedScore(fn, position, pid) {
+  if (pids.isKing(pid)) {
+    return 0; // in check
+  }
+  let minAttackerScore = Infinity;
+  for (const ply of findAttacksTo(position, pid)) {
+    const after = position.preview(ply);
+    if (!findAnyAttackTo(after, ply.pid)) {
+      // hanging
+      return fn(position, pid);
+    }
+    minAttackerScore = Math.min(minAttackerScore, fn(after, ply.pid));
+  }
+  if (minAttackerScore === Infinity) {
+    return 0;
+  }
+  const score = fn(position, pid);
+  return Math.max(score - minAttackerScore, 0);
 }
 
 function isHangingPiece(position, pid) {

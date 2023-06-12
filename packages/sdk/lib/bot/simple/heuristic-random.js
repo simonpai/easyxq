@@ -55,8 +55,7 @@ export default class HeuristicRandomEngine {
     }
 
     sortBy(entries, en => -en.score);
-    const index = Math.min(Math.floor(-Math.log2(Math.random())), entries.length - 1);
-    const entry = entries[index];
+    const entry = this.#select(entries);
 
     this.#log(input, winningPly ? Infinity : entries[0].score, entry);
 
@@ -65,6 +64,18 @@ export default class HeuristicRandomEngine {
 
   #evaluate(input) {
     return Math.round(this.#heuristic.evaluate(input));
+  }
+
+  #select(entries) {
+    const rate = 0.5;
+    const minLevel = 1;
+    for (const entry of entries) {
+      const { score } = entry;
+      if (Math.random() > rate ** Math.max(minLevel, score / 100)) {
+        return entry;
+      }
+    }
+    return entries[entries.length - 1];
   }
 
   #log(input, max, entry) {
