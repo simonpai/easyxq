@@ -155,7 +155,6 @@ export default class Room {
   }
 
   #emit(name, event) {
-    //console.log(`[Room Event] ${name}`, event);
     for (const callback of this.#callbacks) {
       callback(name, event);
     }

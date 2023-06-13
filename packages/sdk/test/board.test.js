@@ -15,12 +15,14 @@ test('notation', () => {
   assert.equal(board.notation, notation);
 });
 
+/*
 test('kings', () => {
   const notation = FEN.STANDARD.split(' ')[0];
   const board = Board.parse(notation);
   assert.equal(board.pieces.KING.RED, 0x04);
   assert.equal(board.pieces.KING.BLACK, 0x94);
 });
+*/
 
 test('pieces', () => {
   const notation = FEN.STANDARD.split(' ')[0];

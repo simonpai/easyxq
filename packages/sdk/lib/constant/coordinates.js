@@ -36,6 +36,18 @@ export const INDICES = Object.freeze({
   }
 });
 
+export function rank(sid) {
+  return sid >> 4;
+}
+
+export function file(sid) {
+  return sid & 0xf;
+}
+
+export function isUnavailable(sid) {
+  return sid === UNAVAILABLE;
+}
+
 export function inBounds(sid) {
   return sid >= 0 && (sid & 0xf) < 9 && (sid >> 4) < 10;
 }

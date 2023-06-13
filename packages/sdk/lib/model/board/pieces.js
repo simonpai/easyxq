@@ -1,7 +1,7 @@
-import { defineValues } from '@easyxq/commons';
+//import { defineValues } from '@easyxq/commons';
 import { COLOR } from '../../constant/index.js';
 import PiecesCore from './pieces-core.js';
-import PiecesKing from './pieces-king.js';
+//import PiecesKing from './pieces-king.js';
 
 export default class Pieces {
 
@@ -18,9 +18,11 @@ export default class Pieces {
 
   constructor(core) {
     this.#core = core;
+    /*
     defineValues(this, {
       KING: new PiecesKing(core),
     });
+    */
   }
 
   *[Symbol.iterator]() {
@@ -37,6 +39,14 @@ export default class Pieces {
 
   get BLACK() {
     return this.#core.slice(16, 32);
+  }
+
+  get RED_PAWNS() {
+    return this.#core.slice(11, 16);
+  }
+
+  get BLACK_PAWNS() {
+    return this.#core.slice(27, 32);
   }
 
   ofColor(color) {

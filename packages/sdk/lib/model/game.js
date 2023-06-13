@@ -1,4 +1,4 @@
-import { pids } from '../constant/index.js';
+import { pids, plies as _plies } from '../constant/index.js';
 import Position from './position.js';
 import Ply from './ply.js';
 
@@ -67,6 +67,7 @@ export default class Game {
       throw new Error('game is already over.');
     }
     const { initialPosition, position, plies, tags } = this;
+    console.log(`[Transit] ${_plies.notate(position, ply)}`);
     return new Game({
       initialPosition,
       position: position.transit(ply),
