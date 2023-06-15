@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { useRoom } from '../hook';
+import { ROOM, COLOR } from '@easyxq/sdk';
+import { useRoom, useScrollTo } from '../hook';
 import Board from './Board';
 import Result from './Result.js';
+
+const { EVENT } = ROOM;
 
 export default function Room({
   app,
@@ -11,9 +14,9 @@ export default function Room({
 }) {
   const [room, actions] = useRoom(settings, { app, autoSave });
   const { state, selected } = room;
-  const { players, index, result } = state;
+  const { players, index, result, events } = state;
 
-  // render the board in mirror mode only when 2p uses UI and 1p doesn't
+  // render the board in mirror mode only when black uses UI and red doesn't
   const redUi = !!players[0].ui;
   const blackUi = !!players[1].ui;
   const mirror = !redUi && blackUi;
@@ -35,6 +38,7 @@ export default function Room({
   return (
     <div className={classNames.join(' ')}>
       <div className="left-hud">
+        <Messages mirror={mirror} events={events} />
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
       {
@@ -51,6 +55,40 @@ export default function Room({
         />
       </div>
     </div>
+  );
+}
+
+function Messages({ mirror, events }) {
+  const [ref] = useScrollTo([events.length]);
+  return (
+    <ul className="messages">
+      {
+        events.flatMap((event, i) => {
+          const { name } = event;
+          switch (name) {
+            case EVENT.MOVE:
+              const messages = [
+                <Message key={i} from={(event.color === COLOR.RED) ^ mirror ? 'lower' : 'upper'}>
+                  { event.notation }
+                </Message>
+              ];
+              return messages;
+          }
+          return [];
+        })
+      }
+      <li className="messages__bottom" ref={ref} />
+    </ul>
+  );
+}
+
+function Message({ from, children }) {
+  return (
+    <li className="message" data-from={from}>
+      <div className="message__inner">
+        { children }
+      </div>
+    </li>
   );
 }
 

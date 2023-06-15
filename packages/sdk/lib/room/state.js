@@ -26,6 +26,10 @@ export default class RoomState {
     return this.#room.queries;
   }
 
+  get events() {
+    return this.#room.events;
+  }
+
   get result() {
     return this.game.result;
   }

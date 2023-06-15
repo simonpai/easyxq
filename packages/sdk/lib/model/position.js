@@ -68,7 +68,7 @@ export default class Position {
       board: this.board.transit(ply),
       color,
       clock: pids.isPiece(ply.captured) ? 0 : this.clock + 1,
-      moveNum: color === COLOR.RED ? this.moveNum + 1 : this.moveNum,
+      moveNum: this.color === COLOR.BLACK ? this.moveNum + 1 : this.moveNum,
     });
   }
 

@@ -1,11 +1,10 @@
-import { removeItem, defineValues } from '@easyxq/commons';
-import { ROOM, COLOR, colors, calls as _calls } from '../constant/index.js';
+import { trimObj, removeItem, defineValues } from '@easyxq/commons';
+import { ROOM, COLOR, colors, calls as _calls, plies as _plies } from '../constant/index.js';
 import { Game } from '../model/index.js';
 import GameContext from './game-context.js';
 import Player from './player.js';
 import RoomState from './state.js';
 import { PlayerHandle, DualPlayerHandle } from './handles.js';
-import { StartEvent, MoveEvent, UndoEvent, EndEvent } from './events.js';
 
 const { ACTION, EVENT } = ROOM;
 
@@ -48,6 +47,7 @@ export default class Room {
   #state;
   #game;
   #calls; // TODO
+  #events;
   #cursor;
   #snapshot;
 
@@ -55,18 +55,18 @@ export default class Room {
   //#stage;
 
   // TODO: #state = room state: game, events
-  // TODO: #events
 
   // TODO: time
 
-  static load({ rules, players, game }) {
-    return new Room({ rules, players, game: Game.load(game) });
+  static load({ rules, players, game, events }) {
+    return new Room({ rules, players, game: Game.load(game), events });
   }
 
   constructor({
     rules,
     players = [{}, {}],
     game,
+    events = [],
     //onError,
   } = {}) {
     // validation
@@ -92,6 +92,7 @@ export default class Room {
 
     // game
     this.#setGame(this.#reconstructGame(game));
+    this.#events = events.map(event => Object.freeze(event));
 
     this.#state = new RoomState(this);
 
@@ -116,6 +117,10 @@ export default class Room {
     return this.#context.queries(this.#game.position);
   }
 
+  get events() {
+    return this.#events;
+  }
+
   get state() {
     return this.#state;
   }
@@ -129,6 +134,7 @@ export default class Room {
       rules: this.rules,
       players: this.#rawPlayers,
       game: this.game.snapshot,
+      events: this.events,
     });
   }
 
@@ -155,6 +161,9 @@ export default class Room {
   }
 
   #emit(name, event) {
+    const timestamp = Date.now();
+    event = Object.freeze({ name, timestamp, ...trimObj(event) });
+    this.#events.push(event);
     for (const callback of this.#callbacks) {
       callback(name, event);
     }
@@ -201,12 +210,13 @@ export default class Room {
       throw new Error(`It's not your turn: ${player.color}`);
     }
 
-    const [position, ply, transitCalls] = this.#context.transit(this.#game.position, from, to);
-    let { result, calls } = this.#context.queries(position);
+    const [position, ply, transitCalls, notation] = this.#context.transit(this.#game.position, from, to);
+    let { result, calls = [], isInCheck: check } = this.#context.queries(position);
     this.#setGame(this.#game.transit(ply, result), transitCalls);
 
-    this.#emit(EVENT.MOVE, new MoveEvent({ index, ply, calls, result }));
-    result && this.#emit(EVENT.END, new EndEvent({ index: this.#game.index, result }));
+    const { color } = ply;
+    this.#emit(EVENT.MOVE, { index, ply, color, calls, result, notation, check });
+    result && this.#emit(EVENT.END, { index: this.#game.index, result });
   }
 
   #onRequestTakeback(player, { index }) {
@@ -227,14 +237,14 @@ export default class Room {
     }
     this.#setGame(game); // TODO: lost transit calls here
 
-    this.#emit(EVENT.UNDO, new UndoEvent({ index, plies }));
+    this.#emit(EVENT.UNDO, { index, plies });
   }
 
   // lifecycle //
   start() {
     // TODO: stage
-    const { initialPosition, position, plies, result, index } = this.#game;
-    this.#emit(EVENT.START, new StartEvent({ index, initialPosition, position, plies, result }));
+    const { initialPosition, position, plies = [], result, index } = this.#game;
+    this.#emit(EVENT.START, { index, initialPosition, position, plies, result });
   }
 
   #error(error) {

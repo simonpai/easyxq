@@ -1,4 +1,4 @@
-import { RULE, calls as _calls } from '../constant/index.js';
+import { RULE, calls as _calls, plies as _plies } from '../constant/index.js';
 import Queries from '../query/index.js';
 import { Rules } from '../rule/index.js';
 
@@ -28,6 +28,7 @@ export default class GameContext {
     let calls = [...rules.apply('preMove', { position, from, to })];
 
     const ply = position.ply(from, to);
+    const notation = _plies.notate(position, ply);
     const preview = position.preview(ply);
 
     calls = [...calls, ...rules.apply('preTransit', { position, ply, preview })];
@@ -36,7 +37,7 @@ export default class GameContext {
 
     calls = [...calls, ...rules.apply('postTransit', { position, ply })];
 
-    return [position, ply, calls];
+    return [position, ply, calls, notation];
   }
 
 }

@@ -78,3 +78,32 @@
     text-shadow: 0 0 4px #000;
   }
 }
+
+ul.messages {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65em;
+  list-style: none;
+  overflow: scroll;
+
+  .messages__bottom {
+    height: 2rem;
+  }
+
+  li.message {
+    display: flex;
+
+    &[data-from="lower"] {
+      justify-content: flex-end;
+    }
+
+    .message__inner {
+      padding: 0.25em 0.85em;
+      border-radius: 9999px;
+      background-color: var(--fiberboard-light);
+      user-select: none;
+    }
+  }
+}
