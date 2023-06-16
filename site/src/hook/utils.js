@@ -22,7 +22,7 @@ function buildRoomFromSettings({ mode = '1p', color = 'random', bot = 'random' }
   const botPlayer = buildBotPlayer(bot);
   const players = color === COLOR.RED ? [human, botPlayer.profile] : [botPlayer.profile, human];
 
-  const room = new Room({ players });
+  const room = Room.start({ players });
 
   botPlayer.bot.handle = room.handle(colors.mirror(color));
 

@@ -98,12 +98,16 @@ const FRONT = '前';
 const MIDDLE = '中';
 const BACK = '後';
 
-function notateFileOrDistance(color, n) {
+function notateDistance(color, n) {
+  return (color === COLOR.RED ? RED_NUMBERS : BLACK_NUMBERS)[n - 1];
+}
+
+function notateFile(color, n) {
   return (color === COLOR.RED ? RED_NUMBERS : BLACK_NUMBERS)[8 - n];
 }
 
 function notateFileOrPiece({ color, piece, file, disambiguation }) {
-  return disambiguation ? notateFileOrDistance(color, file) : pieces.zh(piece);
+  return disambiguation ? notateFile(color, file) : pieces.zh(piece);
 }
 
 function notateMovement({ color, from, to }) {
@@ -111,13 +115,13 @@ function notateMovement({ color, from, to }) {
   const fromRank = c.rank(from);
   const toFile = c.file(to);
   const toRank = c.rank(to);
-  return `${toRank === fromRank ? SIDEWAYS : toRank > fromRank ? FORWARD : BACKWARD}${notateFileOrDistance(color, fromFile === toFile ? Math.abs(toRank - fromRank) : toFile)}`;
+  return `${toRank === fromRank ? SIDEWAYS : toRank > fromRank ? FORWARD : BACKWARD}${fromFile === toFile ? notateDistance(color, Math.abs(toRank - fromRank)) : notateFile(color, toFile)}`;
 }
 
 function notatePiece(info) {
   const { stack, color, piece, file } = info;
   return stack === 1 ?
-    `${pieces.zh(piece)}${notateFileOrDistance(color, file)}` :
+    `${pieces.zh(piece)}${notateFile(color, file)}` :
     `${notateOrdinal(info)}${notateFileOrPiece(info)}`;
 }
 

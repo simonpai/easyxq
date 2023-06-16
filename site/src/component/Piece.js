@@ -12,9 +12,9 @@ function getColor(pid, piece) {
   return undefined;
 }
 
-export default function Piece({ square, piece, children = [], selected = false, lastMoved = false, className, onClick = () => {} }) {
+export default function Piece({ square, pid, piece, children = [], selected = false, lastMoved = false, className, onClick = () => {} }) {
   const sid = square ? square.sid : undefined;
-  const pid = square ? square.pid : undefined;
+  pid = square ? square.pid : pid;
   const color = getColor(pid, piece);
 
   const style = sid !== undefined ? getSidCssProperties(sid) : {};

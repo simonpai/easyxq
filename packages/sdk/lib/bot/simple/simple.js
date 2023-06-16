@@ -1,4 +1,5 @@
 import { ROOM, colors } from '../../constant/index.js';
+import { Ply } from '../../model/index.js';
 import Game from './game.js';
 
 const { EVENT } = ROOM;
@@ -55,6 +56,7 @@ export default class SimpleBot {
   #onEvent(name, event) {
     switch (name) {
       case EVENT.START:
+      case EVENT.RESUME:
         this.#onStart(event);
         break;
       case EVENT.MOVE:
@@ -67,6 +69,7 @@ export default class SimpleBot {
   }
 
   #onStart({ index, initialPosition, position, plies = [], result }) {
+    plies = plies.map(Ply.decode);
     this.#game = new Game({ initialPosition, position, plies, result });
     this.#index = index;
     this.#position = position;
@@ -75,6 +78,7 @@ export default class SimpleBot {
   }
 
   #onMove({ index, ply, result }) {
+    ply = Ply.decode(ply);
     this.#game = this.#game.transit(ply, result);
     const { from, to } = ply;
     this.#index = index + 1;

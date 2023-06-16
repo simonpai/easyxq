@@ -44,6 +44,11 @@ export default class Ply {
     return this.#hash;
   }
 
+  get snapshot() {
+    const { from, to, pid, captured, color } = this;
+    return { from, to, pid, captured, color };
+  }
+
   toString() {
    return `${pids.format(this.pid)}/${c.format(this.from)}${c.format(this.to)}` + (pids.isPiece(this.captured) ? `/${pids.format(this.captured)}` : '');
   }

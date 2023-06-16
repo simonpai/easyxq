@@ -44,6 +44,7 @@ export default class Room {
   #rawPlayers;
 
   // states
+  #started;
   #state;
   #game;
   #calls; // TODO
@@ -58,8 +59,12 @@ export default class Room {
 
   // TODO: time
 
+  static start({ rules, players, game }) {
+    return new Room({ rules, players, game });
+  }
+
   static load({ rules, players, game, events }) {
-    return new Room({ rules, players, game: Game.load(game), events });
+    return new Room({ rules, players, game: Game.load(game), events, continued: true });
   }
 
   constructor({
@@ -67,6 +72,7 @@ export default class Room {
     players = [{}, {}],
     game,
     events = [],
+    continued = false,
     //onError,
   } = {}) {
     // validation
@@ -76,6 +82,7 @@ export default class Room {
     }
     // rules -> context
     this.#context = new GameContext({ rules });
+    this.#started = continued;
 
     // players
     this.#rawPlayers = players;
@@ -214,8 +221,7 @@ export default class Room {
     let { result, calls = [], isInCheck: check } = this.#context.queries(position);
     this.#setGame(this.#game.transit(ply, result), transitCalls);
 
-    const { color } = ply;
-    this.#emit(EVENT.MOVE, { index, ply, color, calls, result, notation, check });
+    this.#emit(EVENT.MOVE, { index, ply: ply.code, calls, result, notation, check });
     result && this.#emit(EVENT.END, { index: this.#game.index, result });
   }
 
@@ -237,14 +243,25 @@ export default class Room {
     }
     this.#setGame(game); // TODO: lost transit calls here
 
+    // mark affected events
+    for (let i = this.#events.length - 1, j = takebackPlyCount; i >= 0 && j > 0; i--) {
+      const event = this.#events[i];
+      if (event.name === EVENT.MOVE) {
+        this.#events[i] = Object.freeze({ ...event, takeback: true });
+        j--;
+      }
+    }
+
     this.#emit(EVENT.UNDO, { index, plies });
   }
 
   // lifecycle //
   start() {
+    const eventName = this.#started ? EVENT.RESUME : EVENT.START;
+    this.#started = true;
     // TODO: stage
     const { initialPosition, position, plies = [], result, index } = this.#game;
-    this.#emit(EVENT.START, { index, initialPosition, position, plies, result });
+    this.#emit(eventName, { index, initialPosition, position, plies, result });
   }
 
   #error(error) {

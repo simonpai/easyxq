@@ -1,11 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { ROOM, COLOR } from '@easyxq/sdk';
-import { useRoom, useScrollTo } from '../hook';
+import { useRoom } from '../hook';
 import Board from './Board';
+import RoomMessages from './RoomMessages.js';
 import Result from './Result.js';
-import SvgSprite from './SvgSprite.js';
-
-const { EVENT } = ROOM;
 
 export default function Room({
   app,
@@ -39,7 +36,7 @@ export default function Room({
   return (
     <div className={classNames.join(' ')}>
       <div className="left-hud">
-        <Messages mirror={mirror} events={events} />
+        <RoomMessages mirror={mirror} events={events} />
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
       {
@@ -56,43 +53,6 @@ export default function Room({
         />
       </div>
     </div>
-  );
-}
-
-function Messages({ mirror, events }) {
-  const [ref] = useScrollTo([events.length]);
-  return (
-    <ul className="messages">
-      {
-        events.flatMap((event, i) => {
-          const { name } = event;
-          switch (name) {
-            case EVENT.MOVE:
-              const messages = [
-                <Message key={i} from={(event.color === COLOR.RED) ^ mirror ? 'lower' : 'upper'}>
-                  { event.notation }
-                </Message>
-              ];
-              return messages;
-          }
-          return [];
-        })
-      }
-      <li className="messages__bottom" ref={ref} />
-    </ul>
-  );
-}
-
-function Message({ from, children }) {
-  return (
-    <li className="message" data-from={from}>
-      <div className="message__inner">
-        <div className="message__bubble">
-          { children }
-        </div>
-        <SvgSprite className="message__tail" file="icons" id="speech-bubble-tail" />
-      </div>
-    </li>
   );
 }
 
