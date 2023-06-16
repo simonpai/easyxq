@@ -3,6 +3,7 @@ import { ROOM, COLOR } from '@easyxq/sdk';
 import { useRoom, useScrollTo } from '../hook';
 import Board from './Board';
 import Result from './Result.js';
+import SvgSprite from './SvgSprite.js';
 
 const { EVENT } = ROOM;
 
@@ -86,7 +87,10 @@ function Message({ from, children }) {
   return (
     <li className="message" data-from={from}>
       <div className="message__inner">
-        { children }
+        <div className="message__bubble">
+          { children }
+        </div>
+        <SvgSprite className="message__tail" file="icons" id="speech-bubble-tail" />
       </div>
     </li>
   );

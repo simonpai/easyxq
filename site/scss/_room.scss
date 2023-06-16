@@ -97,13 +97,34 @@ ul.messages {
 
     &[data-from="lower"] {
       justify-content: flex-end;
+
+      .message__tail {
+        transform: rotate(180deg);
+        top: unset;
+        left: unset;
+        bottom: 0;
+        right: 0;
+      }
     }
 
     .message__inner {
+      position: relative;
+    }
+    .message__bubble {
       padding: 0.25em 0.85em;
       border-radius: 9999px;
       background-color: var(--fiberboard-light);
       user-select: none;
+  
+    }
+    .message__tail {
+      position: absolute;
+      z-index: -1;
+      height: 50%;
+      aspect-ratio: 1;
+      top: 0;
+      left: 0;
+      color: var(--fiberboard-light);
     }
   }
 }

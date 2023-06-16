@@ -1,0 +1,53 @@
+---
+layout: app.njk
+---
+
+{% set icons = [
+  'dice',
+  'colored-dice',
+  'speech-bubble-tail'
+] %}
+
+<style>
+  .main {
+    color: #fff;
+  }
+  .main .grid {
+    display: grid;
+    grid-template-columns: 260px 260px 260px 260px;
+    grid-template-rows: auto;
+    gap: 1rem;
+    margin: 0.5rem 2rem;
+  }
+  .main .grid svg {
+    width: 256px;
+    height: 256px;
+  }
+  .main .grid .svg {
+    width: 260px;
+    height: 260px;
+    border: 2px solid #fff;
+  }
+  .main .grid .text {
+    font-size: 1.2rem;
+    line-height: 2.4rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="main">
+  <div class="grid">
+  {% for icon in icons %}
+    <div class="cell">
+      <div class="svg">
+        <svg xmlns="http://www.w3.org/2000/svg" role="img"
+          viewbox="0 0 1024 1024" fill="currentColor" stroke="none">
+          <use xlink:href="{{ ['/img/icons.svg#', icon] | join | url }}"/>
+        </svg>
+      </div>
+      <div class="text">{{ icon }}</div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
