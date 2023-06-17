@@ -32,6 +32,11 @@
       width: 80%;
     }
   }
+  &.flat {
+    .piece__inner {
+      box-shadow: none;
+    }
+  }
   .piece__inner {
     @include centered;
     @include disc;

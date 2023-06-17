@@ -137,7 +137,6 @@ ul.messages {
         z-index: -1;
         border-bottom: 1px solid #999;
       }
-
       .message__inner {
         padding: 0 0.5em;
         color: #999;
@@ -148,11 +147,34 @@ ul.messages {
     &[data-color="red"] {
       .message__bubble {
         color: var(--piece-red);
+        &::before {
+          border-color: var(--piece-red) !important;
+        }
       }
     }
     &[data-color="black"] {
       .message__bubble {
         color: var(--piece-black);
+        &::before {
+          border-color: var(--piece-black) !important;
+        }
+      }
+    }
+    &.revoked {
+      opacity: 0.75;
+
+      .message__bubble {
+        &::before {
+          content: '';
+          position: absolute;
+          z-index: 10;
+          left: 0.85em;
+          right: 0.85em;
+          top: 40%;
+          bottom: 40%;
+          border-top: 2px solid #999;
+          border-bottom: 2px solid #999;
+        }
       }
     }
 

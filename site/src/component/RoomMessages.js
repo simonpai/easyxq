@@ -19,45 +19,25 @@ export default function RoomMessages({ mirror, events }) {
           switch (name) {
             case EVENT.START:
               return [
-                <Message key={`${i}`} from="narrator">
-                  { t('game-starts') }
-                </Message>,
+                <Message key={`${i}`} from="narrator">{ t('game-starts') }</Message>,
               ];
             case EVENT.END:
               const { result } = event;
               return [
-                <Message key={`${i}`} from="narrator">
-                  { resultMessage(t, result) }
-                </Message>,
+                <Message key={`${i}`} from="narrator">{ resultMessage(t, result) }</Message>,
               ];
             case EVENT.MOVE:
-              const { ply, check } = event;
+              const { ply, check, revoked } = event;
               const { color, captured } = Ply.decode(ply);
               const from = (color === COLOR.RED) ^ mirror ? 'lower' : 'upper';
               let j = 0;
-              const messages = [
-                <Message key={`${i}-${j++}`} color={color} from={from}>
-                  { event.takeback ? <s>{ event.notation }</s> : event.notation }
-                </Message>
+
+              const entries = [
+                [event.notation],
               ];
-              if (pids.isPiece(captured)) {
-                // TODO: takeback
-                messages.push(
-                  <Message key={`${i}-${j++}`} color={color} from={from}>
-                    { t('capture') }
-                    <Piece pid={captured} />
-                  </Message>
-                );
-              }
-              if (check) {
-                // TODO: takeback
-                messages.push(
-                  <Message key={`${i}-${j++}`} color={color} from={from}>
-                    { t('check') }
-                  </Message>
-                );
-              }
-              return messages;
+              pids.isPiece(captured) && entries.push([ t('capture'), <Piece key="piece" pid={captured} className="flat" /> ]);
+              check && entries.push([ t('check') ]);
+              return entries.map(children => <Message key={`${i}-${j++}`} color={color} from={from} revoked={revoked}>{ children }</Message>);
             default:
               return [];
           }
@@ -69,15 +49,17 @@ export default function RoomMessages({ mirror, events }) {
   ];
 }
 
-function Message({ from, color, children }) {
+function Message({ from, color, revoked = false, children }) {
   return from === 'narrator' ?
-    <NarrativeMessage>{ children }</NarrativeMessage> :
-    <BubbleMessage from={from} color={color}>{ children }</BubbleMessage>;
+    <NarrativeMessage revoked={revoked}>{ children }</NarrativeMessage> :
+    <BubbleMessage from={from} color={color} revoked={revoked}>{ children }</BubbleMessage>;
 }
 
-function NarrativeMessage({ children }) {
+function NarrativeMessage({ revoked, children }) {
+  const classNames = ['message'];
+  revoked && classNames.push('revoked');
   return (
-    <li className="message" data-from="narrator">
+    <li className={classNames.join(' ')} data-from="narrator">
       <div className="message__inner">
         { children }
       </div>
@@ -85,9 +67,11 @@ function NarrativeMessage({ children }) {
   );
 }
 
-function BubbleMessage({ from, color, children }) {
+function BubbleMessage({ from, color, revoked, children }) {
+  const classNames = ['message'];
+  revoked && classNames.push('revoked');
   return (
-    <li className="message" data-from={from} data-color={colors.en(color)}>
+    <li className={classNames.join(' ')} data-from={from} data-color={colors.en(color)}>
       <div className="message__inner">
         <div className="message__bubble">
           { children }

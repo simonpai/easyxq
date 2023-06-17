@@ -64,7 +64,7 @@ export default class Room {
   }
 
   static load({ rules, players, game, events }) {
-    return new Room({ rules, players, game: Game.load(game), events, continued: true });
+    return new Room({ rules, players, game: Game.load(game), events, started: true });
   }
 
   constructor({
@@ -72,7 +72,7 @@ export default class Room {
     players = [{}, {}],
     game,
     events = [],
-    continued = false,
+    started = false,
     //onError,
   } = {}) {
     // validation
@@ -82,7 +82,7 @@ export default class Room {
     }
     // rules -> context
     this.#context = new GameContext({ rules });
-    this.#started = continued;
+    this.#started = started; // TODO: shall become #stage
 
     // players
     this.#rawPlayers = players;
@@ -142,6 +142,7 @@ export default class Room {
       players: this.#rawPlayers,
       game: this.game.snapshot,
       events: this.events,
+      started: this.#started,
     });
   }
 
@@ -247,7 +248,7 @@ export default class Room {
     for (let i = this.#events.length - 1, j = takebackPlyCount; i >= 0 && j > 0; i--) {
       const event = this.#events[i];
       if (event.name === EVENT.MOVE) {
-        this.#events[i] = Object.freeze({ ...event, takeback: true });
+        this.#events[i] = Object.freeze({ ...event, revoked: true });
         j--;
       }
     }
