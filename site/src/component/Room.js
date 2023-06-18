@@ -10,6 +10,7 @@ export default function Room({
   settings,
   onQuit,
 }) {
+  const { t } = useTranslation();
   const [room, actions] = useRoom(settings, { app, autoSave });
   const { state, selected } = room;
   const { players, index, result, events } = state;
@@ -36,16 +37,17 @@ export default function Room({
   return (
     <div className={classNames.join(' ')}>
       <div className="left-hud">
-        <RoomMessages mirror={mirror} events={events} />
+        <RoomMessages t={t} mirror={mirror} events={events} />
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
       {
-        result && <Result result={result} onClose={onExit} />
+        result && <Result t={t} result={result} onClose={onExit} />
       }
       <div className="upper-right-hud">
       </div>
       <div className="lower-right-hud">
         <Controls
+          t={t}
           index={index}
           color={lowerPlayer.color}
           onQuit={onExit}
@@ -64,8 +66,7 @@ function Profile() {
   );
 }
 
-function Controls({ index, color, onQuit, onRequestTakeback }) {
-  const { t } = useTranslation();
+function Controls({ t, index, color, onQuit, onRequestTakeback }) {
   return (
     <div className="controls">
       <button type="button" className="btn btn-fiberboard-light" disabled={index < 2} onClick={() => onRequestTakeback(color, index)}>{t('takeback')}</button>
@@ -74,8 +75,7 @@ function Controls({ index, color, onQuit, onRequestTakeback }) {
   );
 }
 
-function Confirmation({ open, message, onConfirm, onCancel }) {
-  const { t } = useTranslation();
+function Confirmation({ t, open, message, onConfirm, onCancel }) {
   return (
     <div className="confirmation">
       <div className="confirmation__inner">

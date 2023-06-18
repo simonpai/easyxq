@@ -1,4 +1,18 @@
+import { Position, Ply } from '../../model/index.js';
+
 export default class Game {
+
+  static load({
+    initialPosition,
+    position,
+    plies,
+    result,
+  }) {
+    initialPosition = initialPosition ? Position.load(initialPosition) : Position.standard();
+    position = position ? Position.load(position) : initialPosition;
+    plies = plies.map(Ply.decode);
+    return new Game({ initialPosition, position, plies, result });
+  }
 
   constructor({
     initialPosition,

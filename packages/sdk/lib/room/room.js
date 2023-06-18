@@ -150,14 +150,14 @@ export default class Room {
   handle(color) {
     return new PlayerHandle(color, {
       send: (name, data) => this.#onPlayerAction(color, name, data),
-      subscribe: (...args) => this.subscribe(...args),
+      subscribe: callback => this.subscribe(callback),
     });
   }
 
   get dualHandle() {
     return new DualPlayerHandle({
       send: (...args) => this.#onPlayerAction(...args),
-      subscribe: (...args) => this.subscribe(...args),
+      subscribe: callback => this.subscribe(callback),
     });
   }
 
@@ -262,7 +262,8 @@ export default class Room {
     this.#started = true;
     // TODO: stage
     const { initialPosition, position, plies = [], result, index } = this.#game;
-    this.#emit(eventName, { index, initialPosition, position, plies, result });
+    const game = this.#game.snapshot;
+    this.#emit(eventName, { index, game, initialPosition, position, plies, result });
   }
 
   #error(error) {

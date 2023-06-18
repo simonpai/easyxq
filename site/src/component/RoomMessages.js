@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { ROOM, COLOR, colors, pids, Ply } from '@easyxq/sdk';
 import { useScrollTo } from '../hook';
 import Piece from './Piece.js';
@@ -7,8 +6,7 @@ import { resultMessage } from './utils.js';
 
 const { EVENT } = ROOM;
 
-export default function RoomMessages({ mirror, events }) {
-  const { t } = useTranslation();
+export default function RoomMessages({ t, mirror, events }) {
   const [ref] = useScrollTo([events.length]);
   return [
     <div key="top" className="messages-top-shadow" />,

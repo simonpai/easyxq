@@ -1,19 +1,15 @@
-import { Room, COLOR, colors, bot } from '@easyxq/sdk';
+import { Room, COLOR, colors, bot as _bot } from '@easyxq/sdk';
 
-const { factory } = bot;
-
-export function buildRoom(settings, snapshot) {
-  if (snapshot) {
-    return buildRoomFromSavedSnapshot(snapshot);
-  }
-  return buildRoomFromSettings(settings);
+export function build(settings, snapshot) {
+  return snapshot ? buildFromSavedSnapshot(snapshot) : buildFromSettings(settings);
 }
 
-function buildRoomFromSettings({ mode = '1p', color = 'random', bot = 'random' } = {}) {
+function buildFromSettings({ mode = '1p', color = 'random', bot = 'random' } = {}) {
   if (mode !== '1p') {
     throw new Error('Only 1p mode is supported for now.');
   }
   color = decodeColor(color);
+  const botColor = colors.mirror(color);
 
   const human = {
     type: 'human',
@@ -24,12 +20,12 @@ function buildRoomFromSettings({ mode = '1p', color = 'random', bot = 'random' }
 
   const room = Room.start({ players });
 
-  botPlayer.bot.handle = room.handle(colors.mirror(color));
+  botPlayer.bot.handle = room.handle(botColor);
 
   return room;
 }
 
-function buildRoomFromSavedSnapshot(snapshot) {
+function buildFromSavedSnapshot(snapshot) {
   const players = [];
   const bots = []
   for (let player of snapshot.players) {
@@ -66,9 +62,13 @@ function decodeColor(color) {
 }
 
 function buildBotPlayer(config) {
-  config = factory.normalize(config);
+  config = _bot.factory.normalize(config);
   const profile = buildBotProfile(config);
-  const bot = factory.build(config);
+
+  // must be written this way for webpack to work
+  const worker = new Worker(new URL('../worker/bot.js', import.meta.url));
+  const bot = new _bot.worker.WorkerBot(worker, { config });
+
   return { profile, bot };
 }
 

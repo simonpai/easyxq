@@ -2,6 +2,15 @@ import { ROOM } from '../constant/index.js';
 
 const { ACTION } = ROOM;
 
+export const playerHandleMixin = {
+  move(index, { from, to }) {
+    this.send(ACTION.MOVE, { index, from, to });
+  },
+  requestTakeback(index) {
+    this.send(ACTION.REQUEST_TAKEBACK, { index });
+  },
+};
+
 export class PlayerHandle {
 
   #handle;
@@ -12,21 +21,17 @@ export class PlayerHandle {
     Object.freeze(this);
   }
 
-  // events //
-  subscribe(...args) {
-    return this.#handle.subscribe(...args);
+  subscribe(callback) {
+    return this.#handle.subscribe(callback);
   }
 
-  // actions //
-  move(index, { from, to }) {
-    this.#handle.send(ACTION.MOVE, { index, from, to });
-  }
-
-  requestTakeback(index) {
-    this.#handle.send(ACTION.REQUEST_TAKEBACK, { index });
+  send(name, data) {
+    this.#handle.send(name, data);
   }
 
 }
+
+Object.assign(PlayerHandle.prototype, playerHandleMixin);
 
 export class DualPlayerHandle {
 
@@ -37,9 +42,8 @@ export class DualPlayerHandle {
     Object.freeze(this);
   }
 
-  // events //
-  subscribe(...args) {
-    return this.#handle.subscribe(...args);
+  subscribe(callback) {
+    return this.#handle.subscribe(callback);
   }
 
   // actions //

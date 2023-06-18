@@ -14,8 +14,6 @@ export default class SimpleBot {
 
   #game;
   #index;
-  #position;
-  #result;
 
   constructor(engine, { delay = 500, handle, ...options } = {}) {
     this.#engine = engine;
@@ -68,34 +66,27 @@ export default class SimpleBot {
     }
   }
 
-  #onStart({ index, initialPosition, position, plies = [], result }) {
-    plies = plies.map(Ply.decode);
-    this.#game = new Game({ initialPosition, position, plies, result });
+  #onStart({ index, game }) {
+    this.#game = Game.load(game);
     this.#index = index;
-    this.#position = position;
-    this.#result = result;
-    this.#moveIfNecessary(index);
+    this.#moveIfNecessary();
   }
 
   #onMove({ index, ply, result }) {
     ply = Ply.decode(ply);
     this.#game = this.#game.transit(ply, result);
-    const { from, to } = ply;
     this.#index = index + 1;
-    this.#position = this.#position.transit(this.#position.ply(from, to));
-    this.#result = result;
-    this.#moveIfNecessary(index + 1);
+    this.#moveIfNecessary();
   }
 
   #onUndo({ index, plies }) {
     this.#game = this.#game.undo(plies);
-    this.#position = plies.reduce((position, ply) => position.undo(ply), this.#position);
     this.#index = index - plies.length;
-    this.#result = undefined;
-    this.#moveIfNecessary(index);
+    this.#moveIfNecessary();
   }
 
-  #moveIfNecessary(index) {
+  #moveIfNecessary() {
+    const index = this.#index;
     const game = this.#game;
     if (game.position.color !== this.color || game.result) {
       return; // not my turn

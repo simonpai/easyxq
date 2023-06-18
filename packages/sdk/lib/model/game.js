@@ -21,12 +21,13 @@ export default class Game {
     initialPosition,
     position,
     plies,
+    result,
     tags,
   }) {
     initialPosition = initialPosition ? Position.load(initialPosition) : Position.standard();
     position = position ? Position.load(position) : initialPosition;
     plies = plies.map(Ply.decode);
-    return new Game({ initialPosition, position, plies, tags });
+    return new Game({ initialPosition, position, plies, result, tags });
   }
 
   #pgn;
@@ -41,7 +42,6 @@ export default class Game {
   } = {}) {
     plies = Object.freeze(plies);
     tags = Object.freeze(tags);
-    //const snapshot = this.#buildSnapshot({ initialPosition, position, plies, result, tags });
     Object.assign(this, { initialPosition, position, plies, result, tags });
     Object.freeze(this);
   }

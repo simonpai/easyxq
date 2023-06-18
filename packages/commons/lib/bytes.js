@@ -1,7 +1,9 @@
 const inBrowser = typeof window !== 'undefined';
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+const inBrowserOrWebWorker = inBrowser || inWebWorker;
 
-export const btoa = inBrowser ? window.btoa : str => Buffer.from(str, 'binary').toString('base64');
-export const atob = inBrowser ? window.atob : str => Buffer.from(str, 'base64').toString('binary');
+export const btoa = inBrowserOrWebWorker ? self.btoa : str => Buffer.from(str, 'binary').toString('base64');
+export const atob = inBrowserOrWebWorker ? self.atob : str => Buffer.from(str, 'base64').toString('binary');
 
 export function arrayBufferToBase64(buffer) {
   let binary = '';
