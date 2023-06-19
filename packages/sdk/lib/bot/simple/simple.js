@@ -79,9 +79,9 @@ export default class SimpleBot {
     this.#moveIfNecessary();
   }
 
-  #onUndo({ index, plies }) {
-    this.#game = this.#game.undo(plies);
-    this.#index = index - plies.length;
+  #onUndo({ index, count }) {
+    this.#game = this.#game.undo(count);
+    this.#index = index - count;
     this.#moveIfNecessary();
   }
 

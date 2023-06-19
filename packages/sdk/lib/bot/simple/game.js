@@ -39,12 +39,15 @@ export default class Game {
     });
   }
 
-  undo(plies) {
-    const { initialPosition, position } = this;
+  undo(count) {
+    let { initialPosition, position } = this;
+    for (const ply of this.plies.slice(-count).reverse()) {
+      position = position.undo(ply);
+    }
     return new Game({
       initialPosition,
-      position: plies.reduce((position, ply) => position.undo(ply), position),
-      plies: this.plies.slice(0, -plies.length),
+      position,
+      plies: this.plies.slice(0, -count),
       result: undefined,
     });
   }

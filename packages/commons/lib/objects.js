@@ -74,3 +74,14 @@ export function bindSelf(target, propNames) {
   }
 }
 */
+
+export function mixin(target, props) {
+  if (typeof target === 'function') {
+    target = target.prototype;
+  }
+  for (const [key, value] of Object.entries(props)) {
+    if (!Object.hasOwnProperty.call(target, key)) {
+      Object.defineProperty(target, key, value);
+    }
+  }
+}

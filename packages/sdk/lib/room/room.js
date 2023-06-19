@@ -171,7 +171,15 @@ export default class Room {
   #emit(name, event) {
     const timestamp = Date.now();
     event = Object.freeze({ name, timestamp, ...trimObj(event) });
-    this.#events.push(event);
+
+    const { length } = this.#events;
+    const shallMerge = name === EVENT.RESUME && length > 0 && this.#events[length - 1].name === EVENT.RESUME;
+    if (shallMerge) {
+      this.#events[length - 1] = event;
+    } else {
+      this.#events.push(event);
+    }
+
     for (const callback of this.#callbacks) {
       callback(name, event);
     }
@@ -231,29 +239,30 @@ export default class Room {
       return;
     }
     const { lastPly } = this.#game;
-    const takebackPlyCount = lastPly.color === player.color ? 1 : 2;
-    if (takebackPlyCount > index) {
-      throw new Error(`Cannot takeback ${takebackPlyCount} plies at index ${index}`);
+    const count = lastPly.color === player.color ? 1 : 2;
+    if (count > index) {
+      throw new Error(`Cannot takeback ${count} plies at index ${index}`);
     }
 
-    const plies = this.#game.plies.slice(-takebackPlyCount);
+    const plies = this.#game.plies.slice(-count);
     plies.reverse();
     let game = this.#game;
-    for (let i = 0; i < takebackPlyCount; i++) {
+    for (let i = 0; i < count; i++) {
       game = game.undo();
     }
     this.#setGame(game); // TODO: lost transit calls here
 
     // mark affected events
-    for (let i = this.#events.length - 1, j = takebackPlyCount; i >= 0 && j > 0; i--) {
+    // TODO: shall match by index
+    for (let i = this.#events.length - 1, j = count; i >= 0 && j > 0; i--) {
       const event = this.#events[i];
-      if (event.name === EVENT.MOVE) {
+      if (event.name === EVENT.MOVE && !event.revoked) {
         this.#events[i] = Object.freeze({ ...event, revoked: true });
         j--;
       }
     }
 
-    this.#emit(EVENT.UNDO, { index, plies });
+    this.#emit(EVENT.UNDO, { index, count });
   }
 
   // lifecycle //
