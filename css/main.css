@@ -117,6 +117,9 @@ footer {
 .piece.ringless .piece--char {
   width: 80%;
 }
+.piece.flat .piece__inner {
+  box-shadow: none;
+}
 .piece .piece__inner {
   position: absolute;
   top: 0;
@@ -308,6 +311,7 @@ footer {
 .room .left-hud,
 .room .upper-right-hud,
 .room .lower-right-hud {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -376,6 +380,122 @@ footer {
   font-weight: bold;
   color: #fff;
   text-shadow: 0 0 4px #000;
+}
+
+.messages-top-shadow,
+.messages-bottom-shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  z-index: 1;
+}
+
+.messages-top-shadow {
+  top: 0;
+  background: linear-gradient(to bottom, #222, transparent);
+}
+
+.messages-bottom-shadow {
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, #222);
+}
+
+ul.messages {
+  position: relative;
+  padding: 1rem 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65em;
+  list-style: none;
+  overflow: scroll;
+}
+ul.messages .messages__bottom {
+  margin-top: 0.5rem;
+}
+ul.messages li.message {
+  display: flex;
+}
+ul.messages li.message[data-from=lower] {
+  justify-content: flex-end;
+}
+ul.messages li.message[data-from=lower] .message__tail {
+  transform: rotate(180deg);
+  top: unset;
+  left: unset;
+  bottom: 0;
+  right: 0;
+}
+ul.messages li.message[data-from=narrator] {
+  position: relative;
+  justify-content: center;
+}
+ul.messages li.message[data-from=narrator]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  border-bottom: 1px solid #999;
+}
+ul.messages li.message[data-from=narrator] .message__inner {
+  padding: 0 0.5em;
+  color: #999;
+  background-color: #222;
+  user-select: none;
+}
+ul.messages li.message[data-color=red] .message__bubble {
+  color: var(--piece-red);
+}
+ul.messages li.message[data-color=red] .message__bubble::before {
+  border-color: var(--piece-red) !important;
+}
+ul.messages li.message[data-color=black] .message__bubble {
+  color: var(--piece-black);
+}
+ul.messages li.message[data-color=black] .message__bubble::before {
+  border-color: var(--piece-black) !important;
+}
+ul.messages li.message.revoked {
+  opacity: 0.75;
+}
+ul.messages li.message.revoked .message__bubble::before {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  left: 0.85em;
+  right: 0.85em;
+  top: 40%;
+  bottom: 40%;
+  border-top: 2px solid #999;
+  border-bottom: 2px solid #999;
+}
+ul.messages li.message .message__inner {
+  position: relative;
+}
+ul.messages li.message .message__bubble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25em 0.85em;
+  border-radius: 9999px;
+  background-color: var(--fiberboard-light);
+  user-select: none;
+}
+ul.messages li.message .message__bubble .piece {
+  display: inline-block;
+  height: 2rem;
+}
+ul.messages li.message .message__tail {
+  position: absolute;
+  z-index: -1;
+  height: 50%;
+  aspect-ratio: 1;
+  top: 0;
+  left: 0;
+  color: var(--fiberboard-light);
 }
 
 body.app {
@@ -476,6 +596,7 @@ body.app #root {
   border-radius: 0.25rem;
   overflow: hidden;
   box-shadow: inset 0 0 0.25rem rgba(0, 0, 0, 0.75);
+  background: #666;
 }
 .avatar .avatar__img {
   width: 100%;
