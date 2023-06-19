@@ -16,6 +16,7 @@ const TEMPO_SCORE = 50;
 
 const SYMBOL_CAPTURE_IS_OBVIOUS_PLY = Symbol('capture.obvious-ply');
 const SYMBOL_PROTECT_IS_OBVIOUS_TARGETS = Symbol('protect.obvious-targets');
+const SYMBOL_PROTECT_SCALED_VALUE_FN = Symbol('protect.scaled-value-fn');
 
 /**
  * If the move captures a piece, gain value of that piece.
@@ -27,7 +28,7 @@ export function capture({ valuing = DEFAULT_VALUING } = {}) {
     if (!pids.isPiece(captured)) {
       return 0;
     }
-    const isObvious = t.memoize(SYMBOL_CAPTURE_IS_OBVIOUS_PLY, createIsObviousPredicateForCapture);
+    const isObvious = t.memoize(SYMBOL_CAPTURE_IS_OBVIOUS_PLY, computeIsObviousPredicateForCapture);
     const score = valueFn(before, captured);
     return isObvious(ply) ? score : score * OBLIVION_PENALTY;
   });
@@ -59,15 +60,16 @@ export function dodge({ valuing = DEFAULT_VALUING } = {}) {
  * If the moved piece moves to protect a piece or makes a capture that eliminates a threat, gain the value of protected piece.
  * If there are multiple pieces protected, the one with the highest value is counted.
  */
-export function protect({ valuing = DEFAULT_VALUING } = {}) {
+export function protect({ valuing = DEFAULT_VALUING, oblivionPenalty = OBLIVION_PENALTY } = {}) {
   const valueFn = values[valuing];
+  const computeScaledValueFn = getComputeScaledValueFnForProtect(valueFn, oblivionPenalty);
   return v(n('protect'), ({ ply, before, after, t }) => {
     const { pid, captured } = ply;
-    const isObvious = t.memoize(SYMBOL_PROTECT_IS_OBVIOUS_TARGETS, createIsObviousTargetPredicateForProtect);
     const hangingAfterMove = isHangingPiece(after, pid);
+    const scaledValueFn = t.memoize(SYMBOL_PROTECT_SCALED_VALUE_FN, computeScaledValueFn);
     const threatEliminated = !hangingAfterMove && pids.isPiece(captured) ? getThreateningScore(valueFn, before, captured) : 0;
-    const protectionScoreAfter = !hangingAfterMove ? getProtectionScore(after, before, pid, isObvious, valueFn) : 0;
-    const protectionScoreBefore = getProtectionScore(before, after, pid, isObvious, valueFn);
+    const protectionScoreAfter = !hangingAfterMove ? getProtectionScore(after, before, pid, scaledValueFn) : 0;
+    const protectionScoreBefore = getProtectionScore(before, after, pid, scaledValueFn);
     // if pieces protected and saved (from threat) are different, the scores should be summed
     // but it's naive so anyway
     return Math.max(threatEliminated, protectionScoreAfter) - protectionScoreBefore;
@@ -104,14 +106,14 @@ export function chase() {
 }
 
 // helpers //
-function createIsObviousPredicateForCapture({ lastPlies }) {
+function computeIsObviousPredicateForCapture({ lastPlies }) {
   const len = lastPlies.length;
   return len === 0 ? () => false :
     len === 1 ? ({ captured }) => captured === lastPlies[0].pid :
     ({ captured, pid }) => captured === lastPlies[0].pid || pid === lastPlies[1].pid;
 }
 
-function createIsObviousTargetPredicateForProtect({ lastPlies, before }) {
+function computeIsObviousTargetPredicateForProtect({ lastPlies, before }) {
   if (lastPlies.length === 0) {
     return () => false;
   }
@@ -119,15 +121,21 @@ function createIsObviousTargetPredicateForProtect({ lastPlies, before }) {
   return pid => targets.has(pid);
 }
 
-function getProtectionScore(position, otherPosition, protectorPid, isObvious, valueFn) {
+function getComputeScaledValueFnForProtect(valueFn, oblivionPenalty) {
+  return ({ lastPlies, before }) => {
+    const isObvious = computeIsObviousTargetPredicateForProtect({ lastPlies, before });
+    return (position, pid) => {
+      const score = valueFn(position, pid);
+      return isObvious(pid) ? score : score * oblivionPenalty;
+    };
+  };
+}
+
+function getProtectionScore(position, otherPosition, protectorPid, valueFn) {
   const protections = [];
   for (const { pid } of findProtectionsBy(position, protectorPid)) {
-    // keep track of values as well
-    let score = valueFn(position, pid);
-    if (!isObvious(pid)) {
-      score *= OBLIVION_PENALTY;
-    }
-    protections.push({ pid, score });
+    // keep track of scores as well
+    protections.push({ pid, score: valueFn(position, pid) });
   }
 
   for (const { pid, score } of sortBy(protections, en => -en.score)) {
@@ -154,20 +162,20 @@ function isChasing(position, pid) {
   return false;
 }
 
-function getThreateningScore(fn, position, pid) {
+function getThreateningScore(valueFn, position, pid) {
   let maxScore = 0;
   for (const ply of findAttacksBy(position, pid)) {
     const after = position.preview(ply);
-    let score = fn(after, ply.captured);
+    let score = valueFn(after, ply.captured);
     if (isHangingPiece(after, ply.pid)) {
-      score -= fn(after, ply.pid);
+      score -= valueFn(after, ply.pid);
     }
     maxScore = Math.max(maxScore, score);
   }
   return maxScore;
 }
 
-function getThreatedScore(fn, position, pid) {
+function getThreatedScore(valueFn, position, pid) {
   if (pids.isKing(pid)) {
     return 0; // in check
   }
@@ -176,16 +184,16 @@ function getThreatedScore(fn, position, pid) {
     const after = position.preview(ply);
     if (!findAnyAttackTo(after, ply.pid)) {
       // hanging, will lose this much value next turn
-      return fn(position, pid);
+      return valueFn(position, pid);
     }
-    minAttackerScore = Math.min(minAttackerScore, fn(after, ply.pid));
+    minAttackerScore = Math.min(minAttackerScore, valueFn(after, ply.pid));
   }
   // not threatened by any piece
   if (minAttackerScore === Infinity) {
     return 0;
   }
   // not hanging. if opponent captures, will lost this much value but can recapture something next turn
-  return Math.max(fn(position, pid) - minAttackerScore, 0);
+  return Math.max(valueFn(position, pid) - minAttackerScore, 0);
 }
 
 function isHangingPiece(position, pid) {
