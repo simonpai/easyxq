@@ -28,4 +28,12 @@ test('protect', () => {
   assert.is(score, 0);
 });
 
+test('protect', () => {
+  const position = 'r2akaehr/9/c1h1e4/p3p3p/2p3p2/P8/2P1P3P/4E1C1R/2C1A4/RH1c1K1H1 r';
+  const ply = 'e1d0';
+  const heuristic = h.naive.protect({ valuing: 'standard' });
+  const score = tool.h.evaluate(heuristic, { position, ply, lastPlies: [49561, 264831106] });
+  assert.is(score, 900);
+});
+
 test.run();
