@@ -1,4 +1,4 @@
-
+import { trimObj } from '@easyxq/commons';
 import * as simple from '../simple/index.js';
 import * as h from '../heuristic/index.js';
 import { normalize } from './configurations.js';
@@ -7,7 +7,7 @@ export * from './configurations.js';
 export { default as presets } from './presets.js';
 
 export function build(config) {
-  const { abilities: { win, ...abilities } = {}, preferences = {}, rules } = config = normalize(config);
+  const { abilities: { win, ...abilities } = {}, rules } = config = normalize(config);
   // TODO: ad-hoc
   // move win() to the front
   let abilityKeys = Object.keys(abilities);
@@ -18,8 +18,9 @@ export function build(config) {
   if (abilityKeys.length === 0) {
     return new simple.Bot(new simple.RandomEngine());
   }
-  const valuing = resolveValuing(config);
-  let heuristic = h.sum(...abilityKeys.map(key => buildHeuristicAxis(key, valuing, preferences[key])));
+  const preferences = extractAbilityPreferences(config);
+  const options = extractAbilityOptions(config);
+  let heuristic = h.sum(...abilityKeys.map(key => buildHeuristicAxis(key, options, preferences[key])));
   heuristic = postProcessHeuristics(heuristic, config);
 
   return new simple.Bot(new simple.HeuristicRandomEngine({
@@ -28,8 +29,7 @@ export function build(config) {
   }));
 }
 
-function resolveAbility(key, valuing) {
-  const options = { valuing };
+function resolveAbility(key, options) {
   switch (key) {
     case 'capture':
       return h.naive.capture(options);
@@ -48,17 +48,22 @@ function resolveAbility(key, valuing) {
   }
 }
 
-function resolveValuing({ knowledge = {} } = {}) {
-  const { valuing = 0 } = knowledge;
-  return valuing === 0 ? 'naive' : 'standard';
+function extractAbilityPreferences({ quirks = {} } = {}) {
+  const { capture, dodge, protect, check, chase, win } = quirks;
+  return trimObj({ capture, dodge, protect, check, chase, win });
 }
 
-function resolvePreference(heuristic, preference = 1) {
+function extractAbilityOptions({ quirks = {} } = {}) {
+  const { valuing, conscious = 0 } = quirks;
+  return trimObj({ valuing, conscious });
+}
+
+function scaleByPreference(heuristic, preference = 1) {
   return preference === 1 ? heuristic : preference === 0 ? h.zero() : heuristic.scale(preference);
 }
 
-function buildHeuristicAxis(key, valuing, preference) {
-  return resolvePreference(resolveAbility(key, valuing), preference);
+function buildHeuristicAxis(key, options, preference) {
+  return scaleByPreference(resolveAbility(key, options), preference);
 }
 
 function postProcessHeuristics(heuristic, { abilities }) {

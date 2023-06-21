@@ -1,3 +1,10 @@
+/*
+ * conscious: lower oblivion penalty by 25%
+ * vengeful: more likely to recapture
+ * determined: weight more toward scores
+ * impatient: quicker to make a move
+ */
+
 const BUTTERFLY = {
   preset: 'butterfly',
   abilities: {},
@@ -8,6 +15,9 @@ const BUNNY = {
   abilities: {
     dodge: 1,
   },
+  quirks: {
+    valuing: 'naive',
+  },
 };
 
 const CRAB = {
@@ -16,7 +26,8 @@ const CRAB = {
     capture: 1,
   },
   quirks: {
-    sidewalk: true,
+    sidewalking: true,
+    valuing: 'naive',
   },
 }
 
@@ -26,19 +37,37 @@ const DUCKLING = {
     capture: 1,
     dodge: 1,
   },
+  quirks: {
+    valuing: 'naive',
+  },
 };
 
 const CHIHUAHUA = {
   preset: 'chihuahua',
-  preferences: {
-    capture: 0.5,
-    check: 2,
-    chase: 2,
-  },
   abilities: {
     capture: 1,
     check: 1,
     chase: 1,
+  },
+  quirks: {
+    check: 2,
+    chase: 2,
+  },
+};
+
+const BABY_TORTOISE = {
+  preset: 'baby-tortoise',
+  abilities: {
+    capture: 1,
+    dodge: 1,
+    protect: 1,
+  },
+  quirks: {
+    capture: 0.5,
+    dodge: 2,
+    protect: 2,
+    conscious: 1,
+    vengeful: 1,
   },
 };
 
@@ -52,8 +81,8 @@ const KITTEN = {
     chase: 1,
     win: 1,
   },
-  knowledge: {
-    valuing: 1,
+  quirks: {
+    conscious: -2,
   },
 };
 
@@ -63,5 +92,6 @@ export default [
   CRAB,
   DUCKLING,
   CHIHUAHUA,
+  BABY_TORTOISE,
   KITTEN,
 ];

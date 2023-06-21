@@ -31,9 +31,27 @@ test('protect', () => {
 test('protect', () => {
   const position = 'r2akaehr/9/c1h1e4/p3p3p/2p3p2/P8/2P1P3P/4E1C1R/2C1A4/RH1c1K1H1 r';
   const ply = 'e1d0';
-  const heuristic = h.naive.protect({ valuing: 'standard' });
+  const heuristic = h.naive.protect();
   const score = tool.h.evaluate(heuristic, { position, ply, lastPlies: [49561, 264831106] });
   assert.is(score, 900);
+});
+
+/*
+test('protect', () => {
+  const position = '2eaka3/9/2h1e1P2/9/C8/2p5P/2P1R4/1rH1E4/4Ar3/R1E1KA1h1 r';
+  const ply = 'a5a2';
+  const heuristic = h.naive.protect();
+  const score = tool.h.evaluate(heuristic, { position, ply, lastPlies: [264787030, 265098503] });
+  console.log(score);
+});
+*/
+
+test('protect', () => {
+  const position = 'rh1a2e1r/1R2a4/4k1hc1/p1H1p1p1p/2e6/4P1P2/P7P/4C2C1/4A4/2c1KAEHR b';
+  const ply = 'c0c6';
+  const heuristic = h.naive.protect();
+  const score = tool.h.evaluate(heuristic, { position, ply, lastPlies: [265850948, 266413393] });
+  assert.is(score, 0);
 });
 
 test.run();

@@ -10,27 +10,35 @@ function n(name) {
   return PREFIX + name;
 }
 
-const DEFAULT_VALUING = 'naive';
-const OBLIVION_PENALTY = 0.5;
+const DEFAULT_VALUING = 'standard';
 const TEMPO_SCORE = 50;
 
 const SYMBOL_CAPTURE_IS_OBVIOUS_PLY = Symbol('capture.obvious-ply');
-const SYMBOL_PROTECT_IS_OBVIOUS_TARGETS = Symbol('protect.obvious-targets');
+const SYMBOL_CAPTURE_IS_RECAPTURING_PLY = Symbol('capture.recapturing-ply');
 const SYMBOL_PROTECT_SCALED_VALUE_FN = Symbol('protect.scaled-value-fn');
 
 /**
  * If the move captures a piece, gain value of that piece.
  */
-export function capture({ valuing = DEFAULT_VALUING } = {}) {
+export function capture({ valuing = DEFAULT_VALUING, conscious, vengeful } = {}) {
+  const oblivionScaling = getOblivionScaling(conscious);
+  const recaptureScaling = getRecapturingScaling(vengeful);
   const valueFn = values[valuing];
   return v(n('capture'), ({ before, ply, t }) => {
     const { captured } = ply;
     if (!pids.isPiece(captured)) {
       return 0;
     }
-    const isObvious = t.memoize(SYMBOL_CAPTURE_IS_OBVIOUS_PLY, computeIsObviousPredicateForCapture);
-    const score = valueFn(before, captured);
-    return isObvious(ply) ? score : score * OBLIVION_PENALTY;
+    const isObvious = oblivionScaling === 1 || t.memoize(SYMBOL_CAPTURE_IS_OBVIOUS_PLY, computeIsObviousPredicateForCapture);
+    const isRecapturing = recaptureScaling !== 1 && t.memoize(SYMBOL_CAPTURE_IS_RECAPTURING_PLY, computeIsRecapturingPredicateForCapture);
+    let score = valueFn(before, captured);
+    if (!isObvious(ply)) {
+      score *= oblivionScaling;
+    }
+    if (isRecapturing) {
+      score *= recaptureScaling;
+    }
+    return score;
   });
 }
 
@@ -38,7 +46,8 @@ export function capture({ valuing = DEFAULT_VALUING } = {}) {
  * If the moved piece moves away from a hanging square, gain value of that piece.
  * If the moved piece moves into a hanging square, lose value of that piece.
  */
-export function dodge({ valuing = DEFAULT_VALUING } = {}) {
+export function dodge({ valuing = DEFAULT_VALUING, conscious } = {}) {
+  const oblivionScaling = getOblivionScaling(conscious);
   const valueFn = values[valuing];
   return v(n('dodge'), ({ lastPlies, ply, before, after }) => {
     const { pid } = ply;
@@ -49,7 +58,7 @@ export function dodge({ valuing = DEFAULT_VALUING } = {}) {
     // for you'd definitely (?) notice if you move a piece into a hanging square
     let score = getThreatedScore(valueFn, before, pid);
     if (!obvious) {
-      score *= OBLIVION_PENALTY;
+      score *= oblivionScaling;
     }
     return score - getThreatedScore(valueFn, after, pid);
   });
@@ -60,9 +69,10 @@ export function dodge({ valuing = DEFAULT_VALUING } = {}) {
  * If the moved piece moves to protect a piece or makes a capture that eliminates a threat, gain the value of protected piece.
  * If there are multiple pieces protected, the one with the highest value is counted.
  */
-export function protect({ valuing = DEFAULT_VALUING, oblivionPenalty = OBLIVION_PENALTY } = {}) {
+export function protect({ valuing = DEFAULT_VALUING, conscious } = {}) {
+  const oblivionScaling = getOblivionScaling(conscious);
   const valueFn = values[valuing];
-  const computeScaledValueFn = getComputeScaledValueFnForProtect(valueFn, oblivionPenalty);
+  const computeScaledValueFn = getComputeScaledValueFnForProtect(valueFn, oblivionScaling);
   return v(n('protect'), ({ ply, before, after, t }) => {
     const { pid, captured } = ply;
     const hangingAfterMove = isHangingPiece(after, pid);
@@ -106,11 +116,24 @@ export function chase() {
 }
 
 // helpers //
+function getOblivionScaling(conscious = 0) {
+  return Math.min(Math.max(0.5 + (conscious / 4), 0), 1);
+}
+
+function getRecapturingScaling(vengeful = 0) {
+  return Math.max(0.5 + (vengeful / 4), 0);
+}
+
 function computeIsObviousPredicateForCapture({ lastPlies }) {
   const len = lastPlies.length;
   return len === 0 ? () => false :
     len === 1 ? ({ captured }) => captured === lastPlies[0].pid :
     ({ captured, pid }) => captured === lastPlies[0].pid || pid === lastPlies[1].pid;
+}
+
+function computeIsRecapturingPredicateForCapture({ lastPlies }) {
+  const len = lastPlies.length;
+  return len === 0 ? () => false : ({ captured }) => captured === lastPlies[0].pid;
 }
 
 function computeIsObviousTargetPredicateForProtect({ lastPlies, before }) {
@@ -121,18 +144,19 @@ function computeIsObviousTargetPredicateForProtect({ lastPlies, before }) {
   return pid => targets.has(pid);
 }
 
-function getComputeScaledValueFnForProtect(valueFn, oblivionPenalty) {
+function getComputeScaledValueFnForProtect(valueFn, oblivionScaling) {
   return ({ lastPlies, before }) => {
     const isObvious = computeIsObviousTargetPredicateForProtect({ lastPlies, before });
     return (position, pid) => {
       const score = valueFn(position, pid);
-      return isObvious(pid) ? score : score * oblivionPenalty;
+      return isObvious(pid) ? score : score * oblivionScaling;
     };
   };
 }
 
 function getProtectionScore(position, otherPosition, protectorPid, valueFn) {
   const protections = [];
+  // TODO: this is inaccurate
   for (const { pid } of findProtectionsBy(position, protectorPid)) {
     // keep track of scores as well
     protections.push({ pid, score: valueFn(position, pid) });
@@ -165,6 +189,9 @@ function isChasing(position, pid) {
 function getThreateningScore(valueFn, position, pid) {
   let maxScore = 0;
   for (const ply of findAttacksBy(position, pid)) {
+    if (pids.isKing(ply.captured)) {
+      continue; // this is check, not threat
+    }
     const after = position.preview(ply);
     let score = valueFn(after, ply.captured);
     if (isHangingPiece(after, ply.pid)) {
