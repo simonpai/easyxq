@@ -12,5 +12,8 @@
   "checkmate": "將死",
   "stalemate": "困斃",
   "win-phrase": "{{ winner }}勝：{{ reason }}",
-  "draw-phrase": "和棋：{{ reason }}"
+  "draw-phrase": "和棋：{{ reason }}",
+  "victory": "勝利！",
+  "draw": "和棋",
+  "defeat": "輸了"
 }
