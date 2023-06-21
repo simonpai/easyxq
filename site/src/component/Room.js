@@ -2,13 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { useRoom } from '../hook';
 import Board from './Board';
 import RoomMessages from './RoomMessages.js';
-import Result from './Result.js';
+import Aftermath from './Aftermath.js';
 
 export default function Room({
   app,
   autoSave = false,
   settings,
-  onQuit,
+  onQuit: _onQuit,
 }) {
   const { t } = useTranslation();
   const [room, actions] = useRoom(settings, { app, autoSave });
@@ -24,14 +24,15 @@ export default function Room({
   if (mirror) {
     [lowerPlayer, upperPlayer] = [upperPlayer, lowerPlayer];
   }
+  const human = lowerPlayer; // TODO: ad-hoc
 
   const classNames = ['room'];
   redUi && classNames.push('red-ui');
   blackUi && classNames.push('black-ui');
 
-  const onExit = () => {
+  const onQuit = () => {
     actions.quit();
-    onQuit();
+    _onQuit();
   };
 
   return (
@@ -41,7 +42,7 @@ export default function Room({
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
       {
-        result && <Result t={t} result={result} onClose={onExit} />
+        result && <Aftermath t={t} human={human} result={result} mirror={mirror} state={state} onQuit={onQuit} />
       }
       <div className="upper-right-hud">
       </div>
@@ -50,7 +51,7 @@ export default function Room({
           t={t}
           index={index}
           color={lowerPlayer.color}
-          onQuit={onExit}
+          onQuit={onQuit}
           onRequestTakeback={actions.requestTakeback}
         />
       </div>

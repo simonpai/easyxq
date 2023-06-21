@@ -61,31 +61,11 @@
 
 .avatar {
   aspect-ratio: 1;
-  border-radius: 0.5rem;
 
-  .avatar__frame {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    background: #666;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.65);
-    padding: 0.25rem;
-  }
-  .avatar__inner {
-    border-radius: 0.25rem;
-    overflow: hidden;
-    box-shadow: inset 0 0 0.25rem rgba(0, 0, 0, 0.75);
-    background: #666;
-  }
   .avatar__img {
     width: 100%;
     height: 100%;
     border-radius: 0.25rem;
     object-fit: cover;
-  }
-  &.bronze .avatar__frame {
-    background: linear-gradient(to bottom, #CD7F32 0%, #BE7023 100%);
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.65), inset 0 0 0.25rem #fff;
   }
 }

@@ -12,5 +12,8 @@
   "checkmate": "checkmate",
   "stalemate": "stalemate",
   "win-phrase": "{{ winner, uppercase }} wins by {{ reason }}.",
-  "draw-phrase": "Draw by {{ reason }}."
+  "draw-phrase": "Draw by {{ reason }}.",
+  "victory": "Victory!",
+  "draw": "Draw",
+  "defeat": "Defeat"
 }

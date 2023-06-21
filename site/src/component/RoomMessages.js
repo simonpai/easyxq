@@ -1,8 +1,7 @@
 import { ROOM, COLOR, colors, pids, Ply } from '@easyxq/sdk';
 import { useScrollTo } from '../hook';
 import Piece from './Piece.js';
-import SvgSprite from './SvgSprite.js';
-import { resultMessage } from './utils.js';
+import SvgSprite from './util/SvgSprite.js';
 
 const { EVENT } = ROOM;
 
@@ -22,7 +21,7 @@ export default function RoomMessages({ t, mirror, events }) {
             case EVENT.END:
               const { result } = event;
               return [
-                <Message key={`${i}`} from="narrator">{ resultMessage(t, result) }</Message>,
+                <Message key={`${i}`} from="narrator">{ resultPhrase(t, result) }</Message>,
               ];
             case EVENT.MOVE:
               const { ply, check, revoked } = event;
@@ -78,4 +77,13 @@ function BubbleMessage({ from, color, revoked, children }) {
       </div>
     </li>
   );
+}
+
+function resultPhrase(t, { type, winner, reason }) {
+  switch (type) {
+    case 'decisive':
+      return t('win-phrase', { winner: t(colors.en(winner)), reason: t(reason) });
+    case 'draw':
+      return t('draw-phrase', { reason: t(reason) });
+  }
 }
