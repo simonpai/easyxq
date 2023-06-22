@@ -76,12 +76,14 @@
 
 .chalkboard {
   --chalkboard-border-width: 1rem;
-  padding: 2rem;
   background-color: var(--chalkboard);
   border-radius: var(--chalkboard-border-width);
   border: var(--chalkboard-border-width) solid var(--wood);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5), inset 0 0 1rem rgba(0, 0, 0, 0.5);
   color: #eee;
+}
+.chalkboard .chalkboard__inner {
+  height: 100%;
 }
 .chalkboard hr {
   height: 0.25rem;
@@ -448,13 +450,6 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /*
-  .hr {
-    height: var(--hr-height);
-    box-shadow: inset 0 0 var(--hr-height) rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(0, 0, 0, 0.25);
-    border-radius: 9999px;
-  }
-  */
 }
 .result.closable {
   cursor: pointer;
@@ -462,21 +457,35 @@ footer {
 .result .chalkboard {
   width: 40rem;
   height: 30rem;
+  font-size: 1.2rem;
 }
-.result .result__phrase {
-  width: 100%;
-  height: fit-content;
-  text-align: center;
-  font-size: 50px;
+.result .chalkboard__inner {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-areas: "title title" "subtitle subtitle" "stats-1p stats-2p" "controls controls";
+  gap: 1rem;
+}
+.result .result__header {
+  grid-area: title;
+}
+.result .result__title {
+  font-size: 3rem;
   font-weight: bold;
+  text-align: center;
 }
-.result .result__btns {
+.result .result__subtitle {
+  grid-area: subtitle;
+  text-align: center;
+}
+.result .result__controls {
+  grid-area: controls;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
 }
 
 .messages-top-shadow,
