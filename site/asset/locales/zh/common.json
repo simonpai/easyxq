@@ -15,5 +15,5 @@
   "draw-phrase": "和棋：{{ reason }}",
   "victory": "勝利！",
   "draw": "和棋",
-  "defeat": "輸了"
+  "defeat": "敗北"
 }

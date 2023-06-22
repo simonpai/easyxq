@@ -1,12 +1,15 @@
 .chalkboard {
   --chalkboard-border-width: 1rem;
 
-  padding: 2rem;
   background-color: var(--chalkboard);
   border-radius: var(--chalkboard-border-width);
   border: var(--chalkboard-border-width) solid var(--wood);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5), inset 0 0 1rem rgba(0, 0, 0, 0.5);
   color: #eee;
+
+  .chalkboard__inner {
+    height: 100%;
+  }
 
   hr {
     height: 0.25rem;

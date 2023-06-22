@@ -79,30 +79,40 @@
     // TODO
     width: 40rem;
     height: 30rem;
+    font-size: 1.2rem;
   }
-  .result__phrase {
-    width: 100%;
-    height: fit-content;
-    text-align: center;
-    font-size: 50px;
+  .chalkboard__inner {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content min-content 1fr min-content;
+    grid-template-areas:
+      "title title"
+      "subtitle subtitle"
+      "stats-1p stats-2p"
+      "controls controls";
+    gap: 1rem;
+  }
+  .result__header {
+    grid-area: title;
+  }
+  .result__title {
+    font-size: 3rem;
     font-weight: bold;
-    //color: #333;
+    text-align: center;
   }
-  .result__btns {
+  .result__subtitle {
+    grid-area: subtitle;
+    text-align: center;
+  }
+  .result__controls {
+    grid-area: controls;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 1rem;
   }
-  /*
-  .hr {
-    height: var(--hr-height);
-    box-shadow: inset 0 0 var(--hr-height) rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(0, 0, 0, 0.25);
-    border-radius: 9999px;
-  }
-  */
 }
 
 .messages-top-shadow,
