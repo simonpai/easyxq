@@ -34,4 +34,8 @@ export default class RoomState {
     return this.game.result;
   }
 
+  get aftermath() {
+    return this.#room.aftermath;
+  }
+
 }

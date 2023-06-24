@@ -4,6 +4,7 @@ import { Game } from '../model/index.js';
 import GameContext from './game-context.js';
 import Player from './player.js';
 import RoomState from './state.js';
+import Aftermath from './aftermath.js';
 import { PlayerHandle, DualPlayerHandle } from './handles.js';
 
 const { ACTION, EVENT } = ROOM;
@@ -49,6 +50,7 @@ export default class Room {
   #game;
   #calls; // TODO
   #events;
+  #aftermath;
   #cursor;
   #snapshot;
 
@@ -100,6 +102,10 @@ export default class Room {
     // game
     this.#setGame(this.#reconstructGame(game));
     this.#events = events.map(event => Object.freeze(event));
+    const { result } = this.game;
+    if (result) {
+      this.#aftermath = new Aftermath(this);
+    }
 
     this.#state = new RoomState(this);
 
@@ -126,6 +132,10 @@ export default class Room {
 
   get events() {
     return this.#events;
+  }
+
+  get aftermath() {
+    return this.#aftermath;
   }
 
   get state() {
@@ -231,7 +241,10 @@ export default class Room {
     this.#setGame(this.#game.transit(ply, result), transitCalls);
 
     this.#emit(EVENT.MOVE, { index, ply: ply.code, calls, result, notation, check });
-    result && this.#emit(EVENT.END, { index: this.#game.index, result });
+    if (result) {
+      const aftermath = this.#aftermath = new Aftermath(this);
+      this.#emit(EVENT.END, { index: this.#game.index, result, aftermath });
+    }
   }
 
   #onRequestTakeback(player, { index }) {
@@ -262,7 +275,7 @@ export default class Room {
       }
     }
 
-    this.#emit(EVENT.UNDO, { index, count });
+    this.#emit(EVENT.UNDO, { index, count, requestedBy: player.color });
   }
 
   // lifecycle //

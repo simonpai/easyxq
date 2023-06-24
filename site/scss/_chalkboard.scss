@@ -11,7 +11,12 @@
     height: 100%;
   }
 
-  hr {
+  hr:not(.vertical) {
     height: 0.25rem;
+  }
+  hr.vertical {
+    width: 0.25rem;
+    height: 100%;
+    margin: 0;
   }
 }

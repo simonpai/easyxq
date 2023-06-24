@@ -82,8 +82,8 @@ function BubbleMessage({ from, color, revoked, children }) {
 function resultPhrase(t, { type, winner, reason }) {
   switch (type) {
     case 'decisive':
-      return t('win-phrase', { winner: t(colors.en(winner)), reason: t(reason) });
+      return t('win-by-x', { winner: t(colors.en(winner)), reason: t(reason) });
     case 'draw':
-      return t('draw-phrase', { reason: t(reason) });
+      return t('draw-by-x', { reason: t(reason) });
   }
 }

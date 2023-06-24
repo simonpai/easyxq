@@ -11,9 +11,11 @@
   "check": "check",
   "checkmate": "checkmate",
   "stalemate": "stalemate",
-  "win-phrase": "{{ winner, uppercase }} wins by {{ reason }}.",
-  "draw-phrase": "Draw by {{ reason }}.",
+  "x-in-n-moves": "{{ reason, uppercase }} in {{ moves }} moves",
+  "win-by-x": "{{ winner, uppercase }} wins by {{ reason }}.",
+  "draw-by-x": "Draw by {{ reason }}.",
   "victory": "Victory!",
   "draw": "Draw",
-  "defeat": "Defeat"
+  "defeat": "Defeat",
+  "colon": ": "
 }

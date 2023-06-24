@@ -12,9 +12,11 @@ export default function Room({
 }) {
   const { t } = useTranslation();
   const [room, actions] = useRoom(settings, { app, autoSave });
+  const aftermathOpen = true;
   const { state, selected } = room;
   const { players, index, result, events } = state;
 
+  // TODO: refactor this
   // render the board in mirror mode only when black uses UI and red doesn't
   const redUi = !!players[0].ui;
   const blackUi = !!players[1].ui;
@@ -24,7 +26,6 @@ export default function Room({
   if (mirror) {
     [lowerPlayer, upperPlayer] = [upperPlayer, lowerPlayer];
   }
-  const human = lowerPlayer; // TODO: ad-hoc
 
   const classNames = ['room'];
   redUi && classNames.push('red-ui');
@@ -41,10 +42,12 @@ export default function Room({
         <RoomMessages t={t} mirror={mirror} events={events} />
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
-      {
-        result && <Aftermath t={t} human={human} result={result} mirror={mirror} state={state} onQuit={onQuit} />
-      }
       <div className="upper-right-hud">
+      </div>
+      <div className="middle-right-hud">
+        {
+          result && <Aftermath t={t} aftermath={state.aftermath} open={aftermathOpen} onQuit={onQuit} />
+        }
       </div>
       <div className="lower-right-hud">
         <Controls
