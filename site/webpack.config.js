@@ -9,7 +9,7 @@ module.exports = {
   cache: false,
   entry: {
     home: './src/entry/home.js',
-    battle: './src/entry/battle.js',
+    arena: './src/entry/arena.js',
   },
   output: {
     filename: '[name].js', // TODO: [contenthash]

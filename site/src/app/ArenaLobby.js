@@ -9,7 +9,7 @@ const DEFAULT_SETTINGS = {
 };
 const LOCAL_STORAGE_KEY = 'battle.settings';
 
-export default function BattleLobby({ onSubmit }) {
+export default function ArenaLobby({ onSubmit }) {
   const { t } = useTranslation();
   const [savedSettings = DEFAULT_SETTINGS, saveSettings] = useLocalStorage(LOCAL_STORAGE_KEY);
 

@@ -6,7 +6,7 @@ export default function HomeApp() {
   return (
     <div className="lobby">
       <div className="menu">
-        <a type="button" className="btn btn-fiberboard-light" href={url('battle/')}>{t('battle')}</a>
+        <a type="button" className="btn btn-fiberboard-light" href={url('arena/')}>{t('arena')}</a>
       </div>
     </div>
   );
