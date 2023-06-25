@@ -1,7 +1,6 @@
-export default function Chalkboard({ children }) {
-  // TODO: merge class names & attributes
+export default function Chalkboard({ children, className, ...props }) {
   return (
-    <div className="chalkboard">
+    <div className={className ? `chalkboard ${className}` : 'chalkboard'} { ...props }>
       <div className="chalkboard__inner">
         { children }
       </div>

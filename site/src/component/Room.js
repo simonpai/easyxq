@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRoom } from '../hook';
 import Board from './Board';
@@ -12,9 +13,9 @@ export default function Room({
 }) {
   const { t } = useTranslation();
   const [room, actions] = useRoom(settings, { app, autoSave });
-  const aftermathOpen = true;
+  const [aftermathOpen, setAftermathOpen] = useState(true);
   const { state, selected } = room;
-  const { players, index, result, events } = state;
+  const { players, index, events, aftermath } = state;
 
   // TODO: refactor this
   // render the board in mirror mode only when black uses UI and red doesn't
@@ -46,12 +47,13 @@ export default function Room({
       </div>
       <div className="middle-right-hud">
         {
-          result && <Aftermath t={t} aftermath={state.aftermath} open={aftermathOpen} onQuit={onQuit} />
+          aftermath && <Aftermath t={t} aftermath={aftermath} open={aftermathOpen} setOpen={setAftermathOpen} onExit={onQuit} />
         }
       </div>
       <div className="lower-right-hud">
         <Controls
           t={t}
+          disabled={index < 2 || aftermath}
           index={index}
           color={lowerPlayer.color}
           onQuit={onQuit}
@@ -70,10 +72,11 @@ function Profile() {
   );
 }
 
-function Controls({ t, index, color, onQuit, onRequestTakeback }) {
+function Controls({ t, disabled, index, color, onQuit, onRequestTakeback }) {
+  // TODO: allow takeback on 1p defeat
   return (
     <div className="controls">
-      <button type="button" className="btn btn-fiberboard-light" disabled={index < 2} onClick={() => onRequestTakeback(color, index)}>{t('takeback')}</button>
+      <button type="button" className="btn btn-fiberboard-light" disabled={disabled} onClick={() => onRequestTakeback(color, index)}>{t('takeback')}</button>
       <button type="button" className="btn btn-fiberboard-light" onClick={onQuit}>{t('quit')}</button>
     </div>
   );

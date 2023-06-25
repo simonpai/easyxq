@@ -32,6 +32,10 @@
   .upper-right-hud {
     grid-area: upper-right-hud;
   }
+  .middle-right-hud {
+    grid-area: middle-right-hud;
+    position: relative;
+  }
   .lower-right-hud {
     grid-area: lower-right-hud;
     justify-content: end;
@@ -53,7 +57,7 @@
 .room.red-ui .board.red .piece.red,
 .room.black-ui .board.black .piece.black {
   &:hover .piece__inner {
-    transform: scale(1.05);
+    @include float;
   }
   cursor: pointer;
 }

@@ -21,8 +21,7 @@
     cursor: pointer;
 
     &:hover .piece {
-      transform: scale(1.05);
-      transition: all 0.1s;
+      @include float;
     }
     .piece {
       width: 3rem;
@@ -50,8 +49,7 @@
       width: 3rem;
     }
     &:hover .avatar {
-      transform: scale(1.05);
-      transition: all 0.1s;
+      @include float;
     }
     &.selected {
       background-color: rgba(0, 128, 0, 0.75);

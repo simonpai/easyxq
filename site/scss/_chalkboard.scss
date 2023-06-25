@@ -5,12 +5,15 @@
   border-radius: var(--chalkboard-border-width);
   border: var(--chalkboard-border-width) solid var(--wood);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5), inset 0 0 1rem rgba(0, 0, 0, 0.5);
-  color: #eee;
+  color: var(--chalk);
 
   .chalkboard__inner {
     height: 100%;
   }
 
+  hr {
+    opacity: .5;
+  }
   hr:not(.vertical) {
     height: 0.25rem;
   }
@@ -19,4 +22,19 @@
     height: 100%;
     margin: 0;
   }
+  .btn {
+    color: var(--chalk);
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 3px dashed var(--chalk);
+    padding: 0.4rem 1.2rem;
+    border-radius: 0.8rem;
+
+    &:hover {
+      transition: all 0.25s;
+      background-color: var(--chalk);
+      color: var(--chalkboard);
+    }
+  }
+
 }

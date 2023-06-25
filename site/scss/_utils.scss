@@ -28,3 +28,7 @@
   left: 0;
   right: 0;
 }
+@mixin float {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}
