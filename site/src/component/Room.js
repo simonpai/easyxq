@@ -53,7 +53,7 @@ export default function Room({
       <div className="lower-right-hud">
         <Controls
           t={t}
-          disabled={index < 2 || aftermath}
+          ended={!!aftermath}
           index={index}
           color={lowerPlayer.color}
           onQuit={onQuit}
@@ -72,12 +72,12 @@ function Profile() {
   );
 }
 
-function Controls({ t, disabled, index, color, onQuit, onRequestTakeback }) {
+function Controls({ t, ended, index, color, onQuit, onRequestTakeback }) {
   // TODO: allow takeback on 1p defeat
   return (
     <div className="controls">
-      <button type="button" className="btn btn-fiberboard-light" disabled={disabled} onClick={() => onRequestTakeback(color, index)}>{t('takeback')}</button>
-      <button type="button" className="btn btn-fiberboard-light" onClick={onQuit}>{t('quit')}</button>
+      <button type="button" className="btn btn-ghost" disabled={index < 2 || ended} onClick={() => onRequestTakeback(color, index)}>{t('takeback')}</button>
+      <button type="button" className="btn btn-ghost" onClick={onQuit}>{t(ended ? 'exit': 'quit')}</button>
     </div>
   );
 }
@@ -88,8 +88,8 @@ function Confirmation({ t, open, message, onConfirm, onCancel }) {
       <div className="confirmation__inner">
         <h2>{message}</h2>
         <div className="confirmation__buttons">
-          <button type="button" className="btn btn-fiberboard-light">{t('confirm')}</button>
-          <button type="button" className="btn btn-fiberboard-light">{t('cancel')}</button>
+          <button type="button" className="btn btn-ghost">{t('confirm')}</button>
+          <button type="button" className="btn btn-ghost">{t('cancel')}</button>
         </div>
       </div>
     </div>

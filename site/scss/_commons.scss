@@ -32,3 +32,18 @@
     @include float;
   }
 }
+
+.btn.btn-ghost {
+  color: #eee;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #eee;
+  padding: 0.3rem 1.2rem;
+  border-radius: 9999px;
+
+  &:hover {
+    transition: all 0.2s;
+    background-color: #eee;
+    color: #333;
+  }
+}

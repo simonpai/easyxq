@@ -35,7 +35,7 @@ export default function Aftermath({ t, aftermath, open, setOpen, onExit }) {
             </ul>
           </div>
           <div className="aftermath__controls">
-            <button type="button" className="btn" onClick={onExit}>{t('quit')}</button>
+            <button type="button" className="btn" onClick={onExit}>{t('exit')}</button>
           </div>
         </Chalkboard> :
         <Chalkboard onClick={() => setOpen(true)}>
