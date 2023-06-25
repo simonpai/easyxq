@@ -1,8 +1,11 @@
 {
-  "battle": "Battle",
-  "battle-settings": "Game Settings",
-  "start": "Start",
-  "takeback": "Takeback",
+  "arena": "arena",
+  "battle": "battle",
+  "battle-settings": "battle settings",
+  "start": "start",
+  "takeback": "takeback",
+  "close": "close",
+  "exit": "exit",
   "quit": "quit",
   "red": "red",
   "black": "black",
@@ -11,9 +14,13 @@
   "check": "check",
   "checkmate": "checkmate",
   "stalemate": "stalemate",
-  "win-phrase": "{{ winner, uppercase }} wins by {{ reason }}.",
-  "draw-phrase": "Draw by {{ reason }}.",
-  "victory": "Victory!",
-  "draw": "Draw",
-  "defeat": "Defeat"
+  "x-in-n-moves": "{{ reason, uppercase }} in {{ moves }} moves",
+  "win-by-x": "{{ winner, uppercase }} wins by {{ reason }}.",
+  "draw-by-x": "Draw by {{ reason }}.",
+  "victory": "victory!",
+  "draw": "draw",
+  "defeat": "defeat",
+  "punctuation": {
+    "colon": ":"
+  }
 }

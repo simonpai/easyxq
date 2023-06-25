@@ -1,8 +1,11 @@
 {
+  "arena": "競技場",
   "battle": "對戰",
   "battle-settings": "遊戲設定",
   "start": "開始",
   "takeback": "悔棋",
+  "close": "關閉",
+  "exit": "離開",
   "quit": "退出",
   "red": "紅",
   "black": "黑",
@@ -11,9 +14,13 @@
   "check": "將軍",
   "checkmate": "將死",
   "stalemate": "困斃",
-  "win-phrase": "{{ winner }}勝：{{ reason }}",
-  "draw-phrase": "和棋：{{ reason }}",
+  "x-in-n-moves": "{{ moves }} 回合{{ reason }}",
+  "win-by-x": "{{ winner }}勝：{{ reason }}",
+  "draw-by-x": "和棋：{{ reason }}",
   "victory": "勝利！",
   "draw": "和棋",
-  "defeat": "敗北"
+  "defeat": "敗北",
+  "punctuation": {
+    "colon": "："
+  }
 }
