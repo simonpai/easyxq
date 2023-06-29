@@ -34,74 +34,45 @@
 <link rel="stylesheet" href="/easyxq/css/main.css">
 
   </head>
-  <body class="app">
-    
-
-
-<style>
-  .main {
-    color: #fff;
-  }
-  .main .grid {
-    display: grid;
-    grid-template-columns: 260px 260px 260px 260px;
-    grid-template-rows: auto;
-    gap: 1rem;
-    margin: 0.5rem 2rem;
-  }
-  .main .grid svg {
-    width: 256px;
-    height: 256px;
-  }
-  .main .grid .svg {
-    width: 260px;
-    height: 260px;
-    border: 2px solid #fff;
-  }
-  .main .grid .text {
-    font-size: 1.2rem;
-    line-height: 2.4rem;
-    text-align: center;
-    vertical-align: middle;
-  }
-</style>
-
-<div class="main">
-  <div class="grid">
-  
-    <div class="cell">
-      <div class="svg">
+  <body class="page">
+    <header class="navbar navbar-expand-md navbar-dark">
+      <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
+        <button type="button" class="navbar-toggler"
+  data-bs-toggle="collapse" data-bs-target="#navbar"
+  aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+  <svg xmlns="http://www.w3.org/2000/svg" role="img"
+    width="32" height="32" viewbox="0 0 16 16"
+    class="bi" fill="currentColor">
+    <use xlink:href="/easyxq/img/bootstrap-icons.svg#list"/>
+  </svg>
+</button>
+<div id="navbar" class="collapse navbar-collapse">
+  <ul class="navbar-nav flex-row flex-wrap pt-2 py-md-0">
+    <li class="nav-item col-6 col-md-auto">
+      <a class="nav-link p-2" href="/easyxq/">Home</a>
+    </li>
+  </ul>
+  <hr class="d-md-none text-white-50">
+  <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+    <li class="nav-item col-6 col-md-auto">
+      <a class="nav-link p-2" href="/easyxq/settings">
         <svg xmlns="http://www.w3.org/2000/svg" role="img"
-          viewbox="0 0 1024 1024" fill="currentColor" stroke="none">
-          <use xlink:href="/easyxq/img/icons.svg#dice"/>
+          viewbox="0 0 16 16"
+          class="bi navbar-nav-svg d-inline-block align-text-top" fill="currentColor">
+          <use xlink:href="/easyxq/img/bootstrap-icons.svg#gear"/>
         </svg>
-      </div>
-      <div class="text">dice</div>
-    </div>
-  
-    <div class="cell">
-      <div class="svg">
-        <svg xmlns="http://www.w3.org/2000/svg" role="img"
-          viewbox="0 0 1024 1024" fill="currentColor" stroke="none">
-          <use xlink:href="/easyxq/img/icons.svg#colored-dice"/>
-        </svg>
-      </div>
-      <div class="text">colored-dice</div>
-    </div>
-  
-    <div class="cell">
-      <div class="svg">
-        <svg xmlns="http://www.w3.org/2000/svg" role="img"
-          viewbox="0 0 1024 1024" fill="currentColor" stroke="none">
-          <use xlink:href="/easyxq/img/icons.svg#speech-bubble-tail"/>
-        </svg>
-      </div>
-      <div class="text">speech-bubble-tail</div>
-    </div>
-  
-  </div>
+        <small class="d-md-none ms-2">Settings</small>
+      </a>
+    </li>
+  </ul>
 </div>
 
+      </nav>
+    </header>
+    <div class="container">
+      <h1>Images</h1>
+
+    </div>
     <footer>
   v0.1.0
 </footer>

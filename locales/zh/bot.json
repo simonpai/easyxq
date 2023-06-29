@@ -1,0 +1,32 @@
+{
+  "char": {
+    "butterfly": {
+      "name": "",
+      "desc": "根本沒在想。"
+    },
+    "bunny": {
+      "name": "",
+      "desc": "動如脫兔。"
+    },
+    "crab": {
+      "name": "",
+      "desc": "最喜歡夾你。"
+    },
+    "duckling": {
+      "name": "",
+      "desc": "什麼都會一點。"
+    },
+    "baby-tortoise": {
+      "name": "",
+      "desc": "慢吞吞但是很仔細。"
+    },
+    "chihuahua": {
+      "name": "",
+      "desc": "突吉隊長。"
+    },
+    "kitten": {
+      "name": "",
+      "desc": "使用肉球攻擊。"
+    }
+  }
+}
