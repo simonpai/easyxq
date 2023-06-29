@@ -1,6 +1,6 @@
 import { bot } from '@easyxq/sdk';
 import Avatar from './Avatar.js';
-import RadioGroup from './util/RadioGroup.js';
+import { RadioGroup } from './util/index.js';
 
 const BOT_OPTIONS = bot.factory.presets.map(p => p.preset);
 

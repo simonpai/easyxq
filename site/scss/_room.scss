@@ -6,14 +6,14 @@
   grid-template-columns: var(--hud-width) calc(100vh - 6rem) var(--hud-width);
   grid-template-rows: 1fr calc(var(--hud-width) * 0.75) 1fr;
   grid-template-areas:
-    "left-hud board upper-right-hud"
-    "left-hud board middle-right-hud"
-    "left-hud board lower-right-hud";
+    "left-hud chessboard upper-right-hud"
+    "left-hud chessboard middle-right-hud"
+    "left-hud chessboard lower-right-hud";
   gap: 1.5rem;
   justify-content: center;
 
-  .board {
-    grid-area: board;
+  .chessboard {
+    grid-area: chessboard;
     height: 100%;
   }
   .left-hud,
@@ -54,8 +54,8 @@
 .room.black-ui .piece.black {
   transition: all 0.1s;
 }
-.room.red-ui .board.red .piece.red,
-.room.black-ui .board.black .piece.black {
+.room.red-ui .chessboard.red .piece.red,
+.room.black-ui .chessboard.black .piece.black {
   &:hover .piece__inner {
     @include float;
   }

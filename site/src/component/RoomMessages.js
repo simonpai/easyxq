@@ -1,7 +1,7 @@
 import { ROOM, COLOR, colors, pids, Ply } from '@easyxq/sdk';
 import { useScrollTo } from '../hook';
 import Piece from './Piece.js';
-import SvgSprite from './util/SvgSprite.js';
+import { SvgSprite } from './util/index.js';
 
 const { EVENT } = ROOM;
 

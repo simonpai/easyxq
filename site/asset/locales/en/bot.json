@@ -1,0 +1,32 @@
+{
+  "char": {
+    "butterfly": {
+      "name": "",
+      "desc": "Not even thinking."
+    },
+    "bunny": {
+      "name": "",
+      "desc": "Hops away from danger."
+    },
+    "crab": {
+      "name": "",
+      "desc": "Enjoys pinching you."
+    },
+    "duckling": {
+      "name": "",
+      "desc": "Can do a bit of everything."
+    },
+    "baby-tortoise": {
+      "name": "",
+      "desc": "Slow and steady."
+    },
+    "chihuahua": {
+      "name": "",
+      "desc": "Barks at everything."
+    },
+    "kitten": {
+      "name": "",
+      "desc": "Distracts you by being adorable."
+    }
+  }
+}

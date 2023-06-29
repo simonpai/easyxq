@@ -1,0 +1,33 @@
+---
+layout: app.njk
+---
+
+<style>
+.main {
+  color: #fff;
+}
+.main .grid {
+  display: grid;
+  grid-template-columns: 260px 260px 260px 260px;
+  grid-template-rows: 260px;
+  gap: 1rem;
+  margin: 0.5rem 2rem;
+}
+.main .grid .cell > * {
+  height: 100%;
+}
+</style>
+
+<div class="main">
+  <div class="grid">
+    <div class="cell">
+      <div class="chalkboard wood-framed">
+        Chalkboard
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cork-board wood-framed">
+      </div>
+    </div>
+  </div>
+</div>

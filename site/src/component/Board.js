@@ -40,10 +40,10 @@ export default function Board({ mirror, state, selected, onMove, onSelect }) {
   // TODO: image path
 
   return (
-    <div className={`board ${colors.en(color)}`}>
-      <div className={`board__plate`} onClick={handleGridClick} onContextMenu={event => event.preventDefault()}>
-        <div className={`board__inner`}>
-          <img className="board__grid" src={url('img/grid.svg')} />
+    <div className={`chessboard ${colors.en(color)}`}>
+      <div className={`chessboard__plate`} onClick={handleGridClick} onContextMenu={event => event.preventDefault()}>
+        <div className={`chessboard__inner`}>
+          <img className="chessboard__grid" src={url('img/grid.svg')} />
           {
             pieces.map(square =>
               <Piece

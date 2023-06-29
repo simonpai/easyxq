@@ -3,13 +3,15 @@
   <head>
     {% include 'header.njk' %}
   </head>
-  <body class="game">
+  <body class="page">
     <header class="navbar navbar-expand-md navbar-dark">
       <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
         {% include 'navbar.njk' %}
       </nav>
     </header>
-    {{ content | safe }}
+    <div class="container">
+      {{ content | safe }}
+    </div>
     {% include 'footer.njk' %}
     {% include 'outro.njk' %}
   </body>

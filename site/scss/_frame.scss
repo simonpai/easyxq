@@ -1,3 +1,4 @@
+/*
 .frame {
   --frame-ring-width: 0.25rem;
   --frame-inner-border-radius: 0.25rem;
@@ -21,5 +22,27 @@
       pointer-events: none;
       box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.25);
     }
+  }
+}
+*/
+
+.polaroid {
+  aspect-ratio: 5 / 7;
+  background: #fff;
+  box-shadow: 0 1.25vb 0.75vb 0.1vb rgba(0, 0, 0, 0.75);
+
+  .polaroid__photo {
+    aspect-ratio: 1;
+    padding: 5.7142857%;
+  }
+  .polaroid__caption {
+    aspect-ratio: 5 / 2;
+    padding: 0 5.7142857%;
+    padding-bottom: 4.7619%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
   }
 }

@@ -1,7 +1,6 @@
 import { PIECE } from '@easyxq/sdk';
 import Piece from './Piece.js';
-import SvgSprite from './util/SvgSprite.js';
-import RadioGroup from './util/RadioGroup.js';
+import { SvgSprite, RadioGroup } from './util/index.js';
 
 const COLOR_OPTIONS = [
   'red',

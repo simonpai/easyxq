@@ -1,17 +1,22 @@
 @import 'variables';
 @import 'utils';
-@import 'frame';
-@import 'plate';
-@import 'chalkboard';
-@import 'footer';
-@import 'char';
+
 @import 'commons';
+@import 'frame';
+@import 'boards';
+
+@import 'char';
 @import 'piece';
-@import 'board';
+@import 'chessboard';
 @import 'aftermath';
 @import 'room';
 
+// layouts //
+@import 'footer';
 @import 'app';
+@import 'page';
+
+// pages //
 @import 'home';
 @import 'arena';
 

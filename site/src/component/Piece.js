@@ -1,6 +1,6 @@
 import { pids, pieces } from '@easyxq/sdk';
 import { getSidCssProperties } from './utils.js';
-import Char from './util/Char.js';
+import { Char } from './util/index.js';
 
 function getColor(pid, piece) {
   if (pid !== undefined) {

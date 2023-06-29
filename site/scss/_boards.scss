@@ -1,15 +1,24 @@
-.chalkboard {
-  --chalkboard-border-width: 1rem;
-
-  background-color: var(--chalkboard);
-  border-radius: var(--chalkboard-border-width);
-  border: var(--chalkboard-border-width) solid var(--wood);
+// frames //
+.framed,
+.wood-framed {
+  --frame-width: 1rem;
+  border-radius: var(--frame-width);
+  border: var(--frame-width) solid transparent;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5), inset 0 0 1rem rgba(0, 0, 0, 0.5);
-  color: var(--chalk);
+}
+.wood-framed {
+  border-color: var(--wood);
+}
 
-  .chalkboard__inner {
-    height: 100%;
-  }
+// boards //
+.cork-board {
+  background: repeat var(--cork-img);
+  color: #fff;
+  text-shadow: 0 0 0.35em #000;
+}
+.chalkboard {
+  background-color: var(--chalkboard);
+  color: var(--chalk);
 
   hr {
     opacity: .5;
@@ -36,5 +45,4 @@
       color: var(--chalkboard);
     }
   }
-
 }

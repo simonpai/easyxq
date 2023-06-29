@@ -11,8 +11,6 @@
       width: 40rem;
       height: 30rem;
       font-size: 1.2rem;
-    }
-    .chalkboard__inner {
       padding: 1rem;
       display: grid;
       grid-template-columns: 1fr min-content 1fr;
@@ -33,19 +31,18 @@
     height: 100%;
   
     .chalkboard {
-      --chalkboard-border-width: 0.5rem;
+      --frame-width: 0.5rem;
+      --chalkboard-frame-width: 0.5rem;
       height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
       cursor: pointer;
 
       &:hover {
         @include float;
       }
-    }
-    .chalkboard__inner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
     }
     .aftermath__title {
       font-size: 2rem;
