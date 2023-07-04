@@ -2,6 +2,7 @@ import { bot } from '@easyxq/sdk';
 import Avatar from './Avatar.js';
 import { RadioGroup } from './util/index.js';
 import { usePseudorandom } from '../hook/index.js';
+import { get } from '../util/bots.js';
 
 const BOT_OPTIONS = bot.factory.presets.map(p => p.preset);
 
@@ -11,7 +12,7 @@ export default function BotOptions({ values = BOT_OPTIONS, ...props }) {
     <RadioGroup name="bot" values={values} {...props} >
       {
         (value) => (
-          <Avatar imageUrl={`img/avatar/${value}.png`} tilt={tilt(rand())} />
+          <Avatar imageUrl={`img/avatar/${get(value).avatar}`} tilt={tilt(rand())} />
         )
       }
     </RadioGroup>

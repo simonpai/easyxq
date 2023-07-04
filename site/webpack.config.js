@@ -22,6 +22,10 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.ya?ml$/,
+        use: 'yaml-loader',
+      },
     ],
   },
   resolve: {

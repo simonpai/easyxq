@@ -1,4 +1,5 @@
 import { Room, COLOR, colors, bot as _bot } from '@easyxq/sdk';
+import { build as buildBotPlayer } from './bots.js';
 
 export function build(settings, snapshot) {
   return snapshot ? buildFromSavedSnapshot(snapshot) : buildFromSettings(settings);
@@ -61,6 +62,7 @@ function decodeColor(color) {
   throw new Error(`Invalid color format: ${color}`);
 }
 
+/*
 function buildBotPlayer(config) {
   config = _bot.factory.normalize(config);
   const profile = buildBotProfile(config);
@@ -80,3 +82,4 @@ function buildBotProfile(config) {
     ...config,
   };
 }
+*/

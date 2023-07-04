@@ -55,8 +55,8 @@ const CHIHUAHUA = {
   },
 };
 
-const BABY_TORTOISE = {
-  preset: 'baby-tortoise',
+const TORTOISE = {
+  preset: 'tortoise',
   abilities: {
     capture: 1,
     dodge: 1,
@@ -92,6 +92,6 @@ export default [
   CRAB,
   DUCKLING,
   CHIHUAHUA,
-  BABY_TORTOISE,
+  TORTOISE,
   KITTEN,
 ];
