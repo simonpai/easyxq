@@ -7,6 +7,10 @@ export * from './configurations.js';
 export { default as presets } from './presets.js';
 
 export function build(config) {
+  return new simple.Bot(buildEngine(config));
+}
+
+export function buildEngine(config) {
   const { abilities: { win, ...abilities } = {}, rules } = config = normalize(config);
   // TODO: ad-hoc
   // move win() to the front
@@ -16,17 +20,17 @@ export function build(config) {
   }
 
   if (abilityKeys.length === 0) {
-    return new simple.Bot(new simple.RandomEngine());
+    return new simple.RandomEngine();
   }
   const preferences = extractAbilityPreferences(config);
   const options = extractAbilityOptions(config);
   let heuristic = h.sum(...abilityKeys.map(key => buildHeuristicAxis(key, options, preferences[key])));
   heuristic = postProcessHeuristics(heuristic, config);
 
-  return new simple.Bot(new simple.HeuristicRandomEngine({
+  return new simple.HeuristicRandomEngine({
     config,
     heuristic,
-  }));
+  });
 }
 
 function resolveAbility(key, options) {

@@ -2,13 +2,13 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { pids } from '@easyxq/sdk';
 import { useForceUpdate } from './force-update.js';
 import { useLocalStorage } from './local-storage.js';
-import { build } from '../util/rooms.js';
+import { rooms } from '../model/index.js';
 
 export default function useRoom(settings = {}, { app, autoSave = false } = {}) {
   const storageKey = autoSave && app ? `${app}.room` : false;
   const [savedRoom, saveRoom, clearRoom] = useLocalStorage(storageKey);
 
-  const [room] = useState(() => build(settings, savedRoom));
+  const [room] = useState(() => rooms.build(settings, savedRoom));
   const handle = useMemo(() => room.dualHandle, [room]);
   const [selected, setSelected] = useState(pids.EMPTY);
   const forceUpdate = useForceUpdate();

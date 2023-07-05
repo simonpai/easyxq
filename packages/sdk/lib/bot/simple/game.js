@@ -2,12 +2,18 @@ import { Position, Ply } from '../../model/index.js';
 
 export default class Game {
 
+  static #standard;
+
+  static standard() {
+    return Game.#standard || (Game.#standard = Game.load());
+  }
+
   static load({
     initialPosition,
     position,
-    plies,
+    plies = [],
     result,
-  }) {
+  } = {}) {
     initialPosition = initialPosition ? Position.load(initialPosition) : Position.standard();
     position = position ? Position.load(position) : initialPosition;
     plies = plies.map(Ply.decode);

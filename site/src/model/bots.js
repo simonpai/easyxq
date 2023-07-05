@@ -28,7 +28,6 @@ function buildProfile(config) {
   return {
     type: 'bot',
     ...BOT_MAP[preset],
-    //avatar: `/img/avatar/${preset}.png`,
     ...config,
   };
 }
