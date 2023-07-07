@@ -34,29 +34,6 @@ export function delegateGetters(target, source, propNames) {
   }, {}));
 }
 
-/*
-export function delegateSetters(target, source, propNames) {
-  propNames = typeof propNames === 'string' ? [propNames] : propNames;
-  Object.defineProperties(target, propNames.reduce((acc, propName) => {
-    acc[propName] = { set: (value) => { source[propName] = value; } };
-    return acc;
-  }, {}));
-}
-*/
-
-/*
-export function delegateProperties(target, source, propNames) {
-  propNames = typeof propNames === 'string' ? [propNames] : propNames;
-  Object.defineProperties(target, propNames.reduce((acc, propName) => {
-    acc[propName] = {
-      get: () => source[propName],
-      set: (value) => { source[propName] = value; },
-    };
-    return acc;
-  }, {}));
-}
-*/
-
 export function defineValues(target, source) {
   for (const name in source) {
     if (source.hasOwnProperty(name)) {
@@ -64,16 +41,6 @@ export function defineValues(target, source) {
     }
   }
 }
-
-/*
-export function bindSelf(target, propNames) {
-  for (const name of propNames || target.getOwnPropertyNames()) {
-    if (typeof target[name] === 'function') {
-      target[name] = target[name].bind(target);
-    }
-  }
-}
-*/
 
 export function mixin(target, props) {
   if (typeof target === 'function') {

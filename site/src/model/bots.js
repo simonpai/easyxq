@@ -1,19 +1,21 @@
-import { bot as _bot } from '@easyxq/sdk';
-import _bots from './bots.yml';
+import { bot as _bot, commons } from '@easyxq/sdk';
+import _presets from './presets.yml';
 
-const BOT_MAP = _bots.reduce((map, { preset, ...bot}) => {
-  map[preset] = bot;
+const { randomItem } = commons;
+
+const PRESET_MAP = _presets.reduce((map, { id, ...bot}) => {
+  map[id] = bot;
   return map;
 }, {});
 
-export const BOTS = _bots;
+export const presets = _presets;
 
 export function get(preset) {
-  return BOT_MAP[preset];
+  return PRESET_MAP[preset];
 }
 
 export function build(config) {
-  config = _bot.factory.normalize(config);
+  config = normalize(config);
   const profile = buildProfile(config);
 
   // must be written this way for webpack to work
@@ -23,11 +25,36 @@ export function build(config) {
   return { profile, bot };
 }
 
+function normalize(config) {
+  if (config === 'random') {
+    config = randomItem(Object.values(presets));
+  }
+  if (typeof config === 'string') {
+    config = { preset: config };
+  }
+  return extend(PRESET_MAP[config.preset], config);
+}
+
 function buildProfile(config) {
   const { preset } = config;
   return {
     type: 'bot',
-    ...BOT_MAP[preset],
+    ...PRESET_MAP[preset],
     ...config,
+  };
+}
+
+function extend(base = {}, { abilities, preferences, knowledge, quirks, ...props } = {}) {
+  abilities = { ...base.abilities, ...abilities };
+  preferences = { ...base.preferences, ...preferences };
+  knowledge = { ...base.knowledge, ...knowledge };
+  quirks = { ...base.quirks, ...quirks };
+  return {
+    ...base,
+    abilities,
+    preferences,
+    knowledge,
+    quirks,
+    ...props,
   };
 }

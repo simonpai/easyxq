@@ -34,7 +34,7 @@ export default class HeuristicRandomEngine {
     for (const ply of nextPlies) {
       const score = this.#evaluate(new Input({ ...input, ply }));
       if (score === Infinity) { // win
-        const { preferences } = this.#config;
+        const { preferences = {} } = this.#config;
         if (winningPly) {
           continue;
         }

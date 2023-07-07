@@ -1,13 +1,25 @@
 .arena .lobby {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr min-content min-content 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "left-spacing settings bot-profile right-spacing";
+  gap: 1.5rem;
+  justify-items: center;
   align-items: center;
 
-  .lobby__plate {
+  .lobby__settings {
+    grid-area: settings;
+    justify-self: end;
     padding: 1.5rem;
     text-align: center;
+  }
+  .lobby__bot-profile {
+    grid-area: bot-profile;
+    justify-self: start;
+    background-color: #eee;
+    padding: 1.5rem;
   }
 }
 
@@ -61,7 +73,6 @@
 }
 
 .avatar {
-  aspect-ratio: 1;
 
   .avatar__img {
     width: 100%;

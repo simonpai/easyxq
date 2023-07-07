@@ -1,17 +1,13 @@
 import { trimObj } from '@easyxq/commons';
-import * as simple from '../simple/index.js';
-import * as h from '../heuristic/index.js';
-import { normalize } from './configurations.js';
-
-export * from './configurations.js';
-export { default as presets } from './presets.js';
+import * as simple from './simple/index.js';
+import * as h from './heuristic/index.js';
 
 export function build(config) {
   return new simple.Bot(buildEngine(config));
 }
 
 export function buildEngine(config) {
-  const { abilities: { win, ...abilities } = {}, rules } = config = normalize(config);
+  const { abilities: { win, ...abilities } = {}, rules } = config;
   // TODO: ad-hoc
   // move win() to the front
   let abilityKeys = Object.keys(abilities);

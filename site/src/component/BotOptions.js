@@ -1,12 +1,11 @@
-import { bot } from '@easyxq/sdk';
 import Avatar from './Avatar.js';
 import { RadioGroup } from './util/index.js';
 import { usePseudorandom } from '../hook/index.js';
 import { bots } from '../model/index.js';
 
-const BOT_OPTIONS = bot.factory.presets.map(p => p.preset);
+const PRESETS = bots.presets.map(p => p.id);
 
-export default function BotOptions({ values = BOT_OPTIONS, ...props }) {
+export default function BotOptions({ values = PRESETS, ...props }) {
   const rand = usePseudorandom({ salt: 'bot-options' });
   return (
     <RadioGroup name="bot" values={values} {...props} >

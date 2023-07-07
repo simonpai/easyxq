@@ -1,5 +1,5 @@
+import { randomItem } from '@easyxq/commons';
 import { GameContext } from '../../room/index.js';
-import { randomItem } from '../../helpers/index.js';
 
 export default class RandomEngine {
 

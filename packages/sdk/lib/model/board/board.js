@@ -1,6 +1,6 @@
-import { mixin, defineValues } from '@easyxq/commons';
+import { mixin, defineValues, randomInt } from '@easyxq/commons';
 import { PIECE as p, pids, coordinates as c } from '../../constant/index.js';
-import { hashBoard, randomInt } from '../../helpers/index.js';
+import { hashBoard } from '../../helpers/index.js';
 import * as boards from './boards.js';
 import Pieces from './pieces.js';
 import Ply from '../ply.js';

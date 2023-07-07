@@ -1,5 +1,5 @@
+import { randomInt } from '@easyxq/commons';
 import { colors, pids } from '../constant/index.js';
-import { randomInt } from './utils.js';
 
 const table = new Map();
 

@@ -1,10 +1,10 @@
-import { normalize, build } from '../factory/index.js';
+import { build } from '../factory.js';
 import { playerHandleMixin } from '../../room/handles.js';
 
 export default async function initialize(scope) {
   const { color, config } = await waitForConfig(scope);
   const handle = new WorkerHandle(color, scope);
-  const bot = build(normalize(config));
+  const bot = build(config);
   bot.handle = handle;
   return bot;
 }

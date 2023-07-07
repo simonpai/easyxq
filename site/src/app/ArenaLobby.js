@@ -22,7 +22,7 @@ export default function ArenaLobby({ onSubmit }) {
 
   return (
     <div className="lobby">
-      <div className="lobby__plate cork-board wood-framed">
+      <div className="lobby__settings cork-board wood-framed">
         <h2>{t('battle-settings')}</h2>
         <hr />
         <ColorOptions selected={color} onSelect={setColor} />

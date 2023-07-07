@@ -61,25 +61,3 @@ function decodeColor(color) {
   }
   throw new Error(`Invalid color format: ${color}`);
 }
-
-/*
-function buildBotPlayer(config) {
-  config = _bot.factory.normalize(config);
-  const profile = buildBotProfile(config);
-
-  // must be written this way for webpack to work
-  const worker = new Worker(new URL('../worker/bot.js', import.meta.url));
-  const bot = new _bot.worker.WorkerBot(worker, { config });
-
-  return { profile, bot };
-}
-
-function buildBotProfile(config) {
-  const { preset } = config;
-  return {
-    type: 'bot',
-    avatar: `/img/avatar/${preset}.png`,
-    ...config,
-  };
-}
-*/
