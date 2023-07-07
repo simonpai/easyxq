@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useContext } from 'react';
+import { TranslationContext } from '../context';
 import { ColorOptions, BotOptions } from '../component';
 import { useLocalStorage } from '../hook';
-import { useTranslation } from 'react-i18next';
 
 const DEFAULT_SETTINGS = {
   color: 'random',
@@ -10,7 +10,7 @@ const DEFAULT_SETTINGS = {
 const LOCAL_STORAGE_KEY = 'battle.settings';
 
 export default function ArenaLobby({ onSubmit }) {
-  const { t } = useTranslation();
+  const t = useContext(TranslationContext);
   const [savedSettings = DEFAULT_SETTINGS, saveSettings] = useLocalStorage(LOCAL_STORAGE_KEY);
 
   const [color, setColor] = useState(savedSettings.color);

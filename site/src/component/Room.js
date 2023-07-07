@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useContext } from 'react';
+import { TranslationContext } from '../context';
 import { useRoom } from '../hook';
 import Board from './Board';
 import RoomMessages from './RoomMessages.js';
@@ -11,7 +11,6 @@ export default function Room({
   settings,
   onQuit: _onQuit,
 }) {
-  const { t } = useTranslation();
   const [room, actions] = useRoom(settings, { app, autoSave });
   const [aftermathOpen, setAftermathOpen] = useState(true);
   const { state, selected } = room;
@@ -40,19 +39,19 @@ export default function Room({
   return (
     <div className={classNames.join(' ')}>
       <div className="left-hud">
-        <RoomMessages t={t} mirror={mirror} events={events} />
+        <RoomMessages mirror={mirror} events={events} />
       </div>
       <Board mirror={mirror} state={state} selected={selected} onMove={actions.move} onSelect={actions.select} />
       <div className="upper-right-hud">
+        <Profile profile={upperPlayer.profile} />
       </div>
       <div className="middle-right-hud">
         {
-          aftermath && <Aftermath t={t} aftermath={aftermath} open={aftermathOpen} setOpen={setAftermathOpen} onExit={onQuit} />
+          aftermath && <Aftermath aftermath={aftermath} open={aftermathOpen} setOpen={setAftermathOpen} onExit={onQuit} />
         }
       </div>
       <div className="lower-right-hud">
         <Controls
-          t={t}
           ended={!!aftermath}
           index={index}
           color={lowerPlayer.color}
@@ -64,7 +63,9 @@ export default function Room({
   );
 }
 
-function Profile() {
+function Profile({ profile }) {
+  const t = useContext(TranslationContext);
+  console.log(profile);
   return (
     <div className="profile">
 
@@ -72,7 +73,8 @@ function Profile() {
   );
 }
 
-function Controls({ t, ended, index, color, onQuit, onRequestTakeback }) {
+function Controls({ ended, index, color, onQuit, onRequestTakeback }) {
+  const t = useContext(TranslationContext);
   // TODO: allow takeback on 1p defeat
   return (
     <div className="controls">
@@ -82,7 +84,8 @@ function Controls({ t, ended, index, color, onQuit, onRequestTakeback }) {
   );
 }
 
-function Confirmation({ t, open, message, onConfirm, onCancel }) {
+function Confirmation({ open, message, onConfirm, onCancel }) {
+  const t = useContext(TranslationContext);
   return (
     <div className="confirmation">
       <div className="confirmation__inner">

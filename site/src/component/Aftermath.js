@@ -1,6 +1,9 @@
 import { colors } from '@easyxq/sdk';
+import { useContext } from 'react';
+import { TranslationContext } from '../context';
 
-export default function Aftermath({ t, aftermath, open, setOpen, onExit }) {
+export default function Aftermath({ aftermath, open, setOpen, onExit }) {
+  const t = useContext(TranslationContext);
   const { players, result, moves, takebackCounts } = aftermath;
   const { type, winner, reason } = result;
   const human = players[!players[0].ui && players[1].ui ? 1 : 0];

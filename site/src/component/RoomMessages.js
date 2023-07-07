@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { ROOM, COLOR, colors, pids, Ply } from '@easyxq/sdk';
+import { TranslationContext } from '../context';
 import { useScrollTo } from '../hook';
 import Piece from './Piece.js';
 import { SvgSprite } from './util/index.js';
 
 const { EVENT } = ROOM;
 
-export default function RoomMessages({ t, mirror, events }) {
+export default function RoomMessages({ mirror, events }) {
+  const t = useContext(TranslationContext);
   const [ref] = useScrollTo([events.length]);
   return [
     <div key="top" className="messages-top-shadow" />,

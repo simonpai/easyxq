@@ -1,7 +1,5 @@
-import { bot as _bot, commons } from '@easyxq/sdk';
+import { bot as _bot, utils } from '@easyxq/sdk';
 import _presets from './presets.yml';
-
-const { randomItem } = commons;
 
 const PRESET_MAP = _presets.reduce((map, { id, ...bot}) => {
   map[id] = bot;
@@ -27,7 +25,7 @@ export function build(config) {
 
 function normalize(config) {
   if (config === 'random') {
-    config = randomItem(Object.values(presets));
+    config = utils.randomItem(Object.values(presets));
   }
   if (typeof config === 'string') {
     config = { preset: config };
