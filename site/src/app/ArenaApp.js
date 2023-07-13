@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TranslationContext } from '../context';
-import { Room } from '../component';
 import { useLocalStorage } from '../hook';
+import { Room } from '../component';
 import ArenaLobby from './ArenaLobby';
 
 const DEFAULT_STATE = { play: false };

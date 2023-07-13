@@ -1,4 +1,4 @@
-import { getSidCssProperties } from './utils.js';
+import { getSidCssProperties } from './utils';
 
 export default function Mark({ sid, type, onClick }) {
   const style = getSidCssProperties(sid);

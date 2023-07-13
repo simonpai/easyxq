@@ -1,4 +1,4 @@
-import { url } from '../utils.js';
+import { url } from '../utils';
 
 export default function SvgSprite({ file, id, fill = 'currentColor', ...props }) {
   return (

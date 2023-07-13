@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { TranslationContext } from '../context';
 import { useRoom } from '../hook';
 import Board from './Board';
-import RoomMessages from './RoomMessages.js';
-import Aftermath from './Aftermath.js';
+import RoomMessages from './RoomMessages';
+import Aftermath from './Aftermath';
 
 export default function Room({
   app,
@@ -65,10 +65,11 @@ export default function Room({
 
 function Profile({ profile }) {
   const t = useContext(TranslationContext);
-  console.log(profile);
   return (
     <div className="profile">
-
+      <div className="profile__avatar ghost-framed">
+        <img src={profile.avatar} alt={profile.name} />
+      </div>
     </div>
   );
 }

@@ -1,17 +1,19 @@
-import Avatar from './Avatar.js';
-import { RadioGroup } from './util/index.js';
-import { usePseudorandom } from '../hook/index.js';
-import { bots } from '../model/index.js';
+import AvatarImg from './AvatarImg';
+import { Polaroid } from './ui';
+import { RadioGroup, CheckLgIcon } from './util';
+import { usePseudorandom } from '../hook';
+import { presets } from '../model';
 
-const PRESETS = bots.presets.map(p => p.id);
-
-export default function BotOptions({ values = PRESETS, ...props }) {
+export default function BotOptions({ values = presets.ids, ...props }) {
   const rand = usePseudorandom({ salt: 'bot-options' });
   return (
     <RadioGroup name="bot" values={values} {...props} >
       {
         (value) => (
-          <Avatar imageUrl={`img/avatar/${bots.get(value).avatar}`} tilt={tilt(rand())} />
+          <Polaroid className="avatar" tilt={tilt(rand())}>
+            <AvatarImg id={value} />
+            <CheckLgIcon className="avatar__check" />
+          </Polaroid>
         )
       }
     </RadioGroup>

@@ -1,15 +1,19 @@
 import { asArray } from '@easyxq/commons';
 
-export default function Polaroid({ children, ...props }) {
-  const [photo, caption] = asArray(children);
+export default function Polaroid({ children, className = '', caption = true, tilt, warpage, ...props }) {
+  const [photo, captionContent] = asArray(children);
   return (
-    <div className="polaroid" style={getStyle(props)}>
+    <div className={`polaroid ${className}`} style={getStyle({ tilt, warpage })} {...props}>
       <div className="polaroid__photo">
         { photo }
       </div>
-      <div className="polaroid__caption">
-        { caption }
-      </div>
+      {
+        caption && (
+          <div className="polaroid__caption">
+            { captionContent }
+          </div>
+        )
+      }
     </div>
   );
 }

@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { ROOM, COLOR, colors, pids, Ply } from '@easyxq/sdk';
 import { TranslationContext } from '../context';
 import { useScrollTo } from '../hook';
-import Piece from './Piece.js';
-import { SvgSprite } from './util/index.js';
+import Piece from './Piece';
+import { SvgSprite } from './util';
 
 const { EVENT } = ROOM;
 

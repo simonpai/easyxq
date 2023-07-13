@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { url } from '../component/utils.js';
+import { url } from '../component/utils';
 
 export default function HomeApp() {
   const { t } = useTranslation();

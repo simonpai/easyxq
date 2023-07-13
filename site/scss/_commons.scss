@@ -34,16 +34,16 @@
 }
 
 .btn.btn-ghost {
-  color: #eee;
+  color: var(--ghost);
   font-size: 1.2rem;
   font-weight: bold;
-  border: 1px solid #eee;
+  border: 1px solid var(--ghost);
   padding: 0.3rem 1.2rem;
   border-radius: 9999px;
 
   &:hover {
     transition: all 0.2s;
-    background-color: #eee;
+    background-color: var(--ghost);
     color: #333;
   }
 }

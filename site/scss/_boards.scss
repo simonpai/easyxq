@@ -9,6 +9,11 @@
 .wood-framed {
   border-color: var(--wood);
 }
+.ghost-framed {
+  border: 2px solid var(--ghost);
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
 
 // boards //
 .cork-board {

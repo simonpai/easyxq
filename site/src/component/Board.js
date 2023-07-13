@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { pids, colors, coordinates as c } from '@easyxq/sdk';
-import Piece from './Piece.js';
-import Mark from './Mark.js';
-import { url } from './utils.js';
+import Piece from './Piece';
+import Mark from './Mark';
+import { url } from './utils';
 
 export default function Board({ mirror, state, selected, onMove, onSelect }) {
   const { game, queries } = state;

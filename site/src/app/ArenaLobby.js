@@ -1,7 +1,8 @@
 import { useState, useMemo, useContext } from 'react';
 import { TranslationContext } from '../context';
-import { ColorOptions, BotOptions } from '../component';
 import { useLocalStorage } from '../hook';
+import { ColorOptions, BotOptions, Polaroid, AvatarImg } from '../component';
+import { presets } from '../model';
 
 const DEFAULT_SETTINGS = {
   color: 'random',
@@ -31,6 +32,21 @@ export default function ArenaLobby({ onSubmit }) {
         <hr />
         <button type="button" className="btn btn-fiberboard-light" onClick={onClick}>{t('start')}</button>
       </div>
+      <div className="lobby__bot-profile">
+        <Profile id={bot} />
+      </div>
+    </div>
+  );
+}
+
+function Profile({ id }) {
+  const t = useContext(TranslationContext);
+  const profile = presets.get(id);
+  return (
+    <div className="profile">
+      <Polaroid className="avatar" caption={false}>
+        <AvatarImg id={id} />
+      </Polaroid>
     </div>
   );
 }

@@ -1,3 +1,4 @@
-export { default as Char } from './Char.js';
-export { default as SvgSprite } from './SvgSprite.js';
-export { default as RadioGroup } from './RadioGroup.js';
+export { default as Char } from './Char';
+export { default as SvgSprite } from './SvgSprite';
+export { default as RadioGroup } from './RadioGroup';
+export * from './icons';

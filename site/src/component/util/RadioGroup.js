@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 export default function RadioGroup({ name, values, selected, onSelect = () => {}, children, className = '', ...props }) {
   // TODO: put click handler on the parent element?
   return (

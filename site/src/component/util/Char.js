@@ -1,5 +1,5 @@
 import { pids, pieces } from '@easyxq/sdk';
-import SvgSprite from './SvgSprite.js';
+import SvgSprite from './SvgSprite';
 
 export default function Char({ pid, piece, stroke = 'currentColor', strokeWidth = '3.5%', ...props }) {
   const id = pid !== undefined ? pids.format(pid) : pieces.format(piece);

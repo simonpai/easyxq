@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { pids } from '@easyxq/sdk';
-import { useForceUpdate } from './force-update.js';
-import { useLocalStorage } from './local-storage.js';
-import { rooms } from '../model/index.js';
+import { useForceUpdate } from './force-update';
+import { useLocalStorage } from './local-storage';
+import { rooms } from '../model';
 
 export default function useRoom(settings = {}, { app, autoSave = false } = {}) {
   const storageKey = autoSave && app ? `${app}.room` : false;

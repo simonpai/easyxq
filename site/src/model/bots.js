@@ -1,16 +1,5 @@
 import { bot as _bot, utils } from '@easyxq/sdk';
-import _presets from './presets.yml';
-
-const PRESET_MAP = _presets.reduce((map, { id, ...bot}) => {
-  map[id] = bot;
-  return map;
-}, {});
-
-export const presets = _presets;
-
-export function get(preset) {
-  return PRESET_MAP[preset];
-}
+import presets from './presets.js';
 
 export function build(config) {
   config = normalize(config);
@@ -25,19 +14,19 @@ export function build(config) {
 
 function normalize(config) {
   if (config === 'random') {
-    config = utils.randomItem(Object.values(presets));
+    config = utils.randomItem([...presets]);
   }
   if (typeof config === 'string') {
     config = { preset: config };
   }
-  return extend(PRESET_MAP[config.preset], config);
+  return extend(presets.get(config.preset), config);
 }
 
 function buildProfile(config) {
   const { preset } = config;
   return {
     type: 'bot',
-    ...PRESET_MAP[preset],
+    ...presets.get(preset),
     ...config,
   };
 }
