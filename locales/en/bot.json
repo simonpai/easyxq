@@ -1,7 +1,7 @@
 {
   "char": {
     "butterfly": {
-      "name": "",
+      "name": "Wilson",
       "desc": "Not even thinking."
     },
     "bunny": {
@@ -17,16 +17,16 @@
       "desc": "Can do a bit of everything."
     },
     "tortoise": {
-      "name": "",
+      "name": "Franklin",
       "desc": "Slow and steady."
     },
     "chihuahua": {
-      "name": "",
+      "name": "Gillian",
       "desc": "Barks at everything."
     },
     "kitten": {
-      "name": "",
-      "desc": "Distracts you by being adorable."
+      "name": "Kafka",
+      "desc": "Thinks about strange ideas all the time."
     }
   }
 }
