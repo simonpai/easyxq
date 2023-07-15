@@ -1,11 +1,9 @@
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 const markdownIt = require('markdown-it');
 const yaml = require('js-yaml');
-const package = require('./package.json');
+const meta = require('./_meta');
 
 const markdown = markdownIt({ html: true });
-
-const version = package.version ? `v${package.version}` : 'dev';
 
 module.exports = function(config) {
   config.setLibrary('md', markdown);
@@ -22,7 +20,9 @@ module.exports = function(config) {
 
   config.addNunjucksFilter('markdown', value => markdown.renderInline(value));
 
-  config.addNunjucksGlobal('version', version);
+  config.addNunjucksGlobal('meta', meta.data);
+  config.on('eleventy.before', () => meta.reload());
+
   if (process.env.NODE_ENV === 'production') {
     config.addNunjucksGlobal('gaid', 'G-LS32PJ4JZJ');
   }

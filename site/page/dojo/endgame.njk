@@ -1,0 +1,12 @@
+---
+layout: app.njk
+pagination:
+  data: endgames
+  size: 1
+  alias: game
+permalink: "dojo/endgames/{{ game.path }}/"
+---
+
+<div id="root" class="endgame">
+  {{ game.fen }}
+</div>

@@ -1,3 +1,5 @@
+{%- set pageExt = meta.pages[page.url] -%}
+{%- set canonicalUrl = [ "https://", hostname, page.url | url ] | join -%}
 <title>超簡單象棋</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

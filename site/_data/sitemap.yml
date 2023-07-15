@@ -1,0 +1,4 @@
+- path: arena
+- path: dojo
+  children:
+  - path: endgames

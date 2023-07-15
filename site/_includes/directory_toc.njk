@@ -1,0 +1,7 @@
+<ul>
+  {%- for page in meta.pages[page.url].children -%}
+  <li>
+    <a href="{{ page.path }}/">{{ page.path }}</a>
+  </li>
+  {%- endfor -%}
+</ul>
