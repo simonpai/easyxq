@@ -67,7 +67,6 @@ export default class Game {
       throw new Error('game is already over.');
     }
     const { initialPosition, position, plies, tags } = this;
-    console.log(`[Transit] ${_plies.notate(position, ply)}`);
     return new Game({
       initialPosition,
       position: position.transit(ply),

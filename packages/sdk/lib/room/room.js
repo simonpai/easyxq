@@ -239,6 +239,7 @@ export default class Room {
     const [position, ply, transitCalls, notation] = this.#context.transit(this.#game.position, from, to);
     let { result, calls = [], isInCheck: check } = this.#context.queries(position);
     this.#setGame(this.#game.transit(ply, result), transitCalls);
+    console.log(`[Transit] ${_plies.notate(position, ply)}`);
 
     this.#emit(EVENT.MOVE, { index, ply: ply.code, calls, result, notation, check });
     if (result) {

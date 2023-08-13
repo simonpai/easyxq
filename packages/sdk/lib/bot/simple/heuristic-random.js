@@ -7,12 +7,14 @@ export default class HeuristicRandomEngine {
   #context;
   #config;
   #heuristic;
+  #debug;
 
-  constructor({ config, heuristic } = {}) {
+  constructor({ config, heuristic } = {}, { debug } = {}) {
     const { rules } = config;
     this.#context = new GameContext({ rules });
     this.#config = config || {};
     this.#heuristic = heuristic || (() => 0);
+    this.#debug = debug;
   }
 
   async next({ position, plies }) {
@@ -79,10 +81,13 @@ export default class HeuristicRandomEngine {
   }
 
   #log(input, max, entry) {
+    if (!this.#debug) {
+      return;
+    }
     // TODO
     const { ply } = entry;
-    console.log(input.before.fen, input.lastPlies.map(ply => ply.code));
-    console.log(`${ply}: ${formatScore(entry.score)} ${entry.score === max ? '(best)' : `(best = ${formatScore(max)})`} = ${this.#heuristic.explain(new Input({ ...input, ply }))}`);
+    this.#debug(input.before.fen, input.lastPlies.map(ply => ply.code));
+    this.#debug(`${ply}: ${formatScore(entry.score)} ${entry.score === max ? '(best)' : `(best = ${formatScore(max)})`} = ${this.#heuristic.explain(new Input({ ...input, ply }))}`);
   }
 
 }

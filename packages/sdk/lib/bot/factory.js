@@ -2,11 +2,11 @@ import { trimObj } from '@easyxq/commons';
 import * as simple from './simple/index.js';
 import * as h from './heuristic/index.js';
 
-export function build(config) {
-  return new simple.Bot(buildEngine(config));
+export function build(config, options = {}) {
+  return new simple.Bot(buildEngine(config, options.engine), options);
 }
 
-export function buildEngine(config) {
+export function buildEngine(config, options) {
   const { abilities: { win, ...abilities } = {}, rules } = config;
   // TODO: ad-hoc
   // move win() to the front
@@ -19,14 +19,14 @@ export function buildEngine(config) {
     return new simple.RandomEngine();
   }
   const preferences = extractAbilityPreferences(config);
-  const options = extractAbilityOptions(config);
-  let heuristic = h.sum(...abilityKeys.map(key => buildHeuristicAxis(key, options, preferences[key])));
+  const abilityOptions = extractAbilityOptions(config);
+  let heuristic = h.sum(...abilityKeys.map(key => buildHeuristicAxis(key, abilityOptions, preferences[key])));
   heuristic = postProcessHeuristics(heuristic, config);
 
   return new simple.HeuristicRandomEngine({
     config,
     heuristic,
-  });
+  }, options);
 }
 
 function resolveAbility(key, options) {

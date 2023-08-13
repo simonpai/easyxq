@@ -4,7 +4,11 @@ import { playerHandleMixin } from '../../room/handles.js';
 export default async function initialize(scope) {
   const { color, config } = await waitForConfig(scope);
   const handle = new WorkerHandle(color, scope);
-  const bot = build(config);
+  const debug = (...args) => console.log(...args);
+  const bot = build(config, {
+    debug,
+    engine: { debug },
+  });
   bot.handle = handle;
   return bot;
 }

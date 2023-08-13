@@ -10,14 +10,16 @@ export default class SimpleBot {
   #unsubscribeHandle;
   #engine;
   #delay;
+  #debug;
   #options;
 
   #game;
   #index;
 
-  constructor(engine, { delay = 500, handle, ...options } = {}) {
+  constructor(engine, { delay = 500, handle, debug, ...options } = {}) {
     this.#engine = engine;
     this.#delay = delay;
+    this.#debug = debug;
     this.#options = options;
 
     this.handle = handle;
@@ -100,7 +102,8 @@ export default class SimpleBot {
     const ply = await this.#engine.next(game);
     const cost = performance.now() - start;
 
-    console.log(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);
+    this.#debug && this.#debug(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);
+    //console.log(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);
 
     const delay = by - Date.now();
     if (delay > 0) {
