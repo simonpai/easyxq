@@ -6,11 +6,11 @@
     },
     "bunny": {
       "name": "",
-      "desc": "動如脫兔。"
+      "desc": "擅長逃跑。"
     },
     "crab": {
       "name": "",
-      "desc": "最喜歡夾你。"
+      "desc": "喜愛攻擊。"
     },
     "duckling": {
       "name": "",
@@ -21,8 +21,8 @@
       "desc": "慢吞吞但是很仔細。"
     },
     "chihuahua": {
-      "name": "吉利安",
-      "desc": "突吉隊長。"
+      "name": "公爵",
+      "desc": "看起來很兇，但其實有點膽小。"
     },
     "kitten": {
       "name": "卡夫卡",

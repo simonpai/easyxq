@@ -10,7 +10,7 @@
     },
     "crab": {
       "name": "",
-      "desc": "Enjoys pinching you."
+      "desc": "Enjoys attacks."
     },
     "duckling": {
       "name": "",
@@ -21,8 +21,8 @@
       "desc": "Slow and steady."
     },
     "chihuahua": {
-      "name": "Gillian",
-      "desc": "Barks at everything."
+      "name": "Duke",
+      "desc": "Barks at everything but rather gutless."
     },
     "kitten": {
       "name": "Kafka",
