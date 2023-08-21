@@ -1,5 +1,5 @@
 - id: butterfly
-  avatar: butterfly.jpg
+  avatar: butterfly.png
 - id: bunny
   avatar: bunny.png
   abilities:
@@ -29,7 +29,7 @@
     check: 2
     chase: 2
 - id: tortoise
-  avatar: tortoise.jpg
+  avatar: tortoise.png
   abilities:
     capture: 1
     dodge: 1

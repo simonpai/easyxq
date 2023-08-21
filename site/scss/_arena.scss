@@ -20,7 +20,7 @@
     justify-self: start;
 
     .avatar {
-      width:10rem;
+      width: 10rem;
     }
   }
 }
@@ -78,10 +78,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: radial-gradient(#444, #000);
 }
 
 .avatar {
-
   .avatar__img {
     width: 100%;
     height: 100%;
