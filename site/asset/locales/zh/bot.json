@@ -1,15 +1,15 @@
 {
   "char": {
     "butterfly": {
-      "name": "威爾森",
+      "name": "西米露",
       "desc": "根本沒在想。"
     },
     "bunny": {
-      "name": "",
+      "name": "麻糬",
       "desc": "擅長逃跑。"
     },
     "crab": {
-      "name": "",
+      "name": "卡滋",
       "desc": "喜愛攻擊。"
     },
     "duckling": {
@@ -17,7 +17,7 @@
       "desc": "什麼都會一點。"
     },
     "tortoise": {
-      "name": "富蘭克林",
+      "name": "朵朵",
       "desc": "慢吞吞但是很仔細。"
     },
     "chihuahua": {

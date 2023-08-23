@@ -1,39 +1,10 @@
+import { workerData, parentPort } from 'worker_threads';
 import { bot, GameContext } from '../lib/index.js';
 
-function buildEngines() {
-  return [
-    bot.buildEngine({
-      abilities: {
-        capture: 1,
-        dodge: 1,
-        //protect: 1,
-        //check: 1,
-        //chase: 1,
-        //win: 1,
-      },
-    }),
-    bot.buildEngine({
-      abilities: {
-        capture: 1,
-        dodge: 1,
-        protect: 1,
-        check: 1,
-        chase: 1,
-        win: 1,
-      },
-      quirks: {
-        //capture: 0.5,
-        //dodge: 2,
-        //protect: 2,
-        conscious: -2,
-        //vengeful: 1,
-      },
-    })
-  ];
-}
+const { bots, n } = workerData;
 
-async function runGame() {
-  const [p1, p2] = buildEngines();
+async function runGame({ bots }) {
+  const [p1, p2] = bots.map(config => bot.buildEngine(config));
 
   const context = new GameContext({});
   
@@ -61,13 +32,15 @@ let results = {
   elapsed: 0,
   wins: [0, 0],
 };
-for (let i = 0; i < 100; i++) {
-  const { elapsed, result } = await runGame();
+for (let i = 0; i < n; i++) {
+  const { elapsed, result } = await runGame({ bots });
   results.elapsed += elapsed;
   if (result.winner) {
     results.wins[result.winner - 1]++;
   }
-  console.log(`#${i}`, result, `Elapsed: ${elapsed}ms`);
+  parentPort.postMessage({ i, elapsed, result });
+  //console.log(`[${id}] #${i}`, result, `Elapsed: ${elapsed}ms`);
 }
 
-console.log(results);
+//console.log(results);
+//parentPort.postMessage(results);
