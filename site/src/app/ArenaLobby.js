@@ -41,12 +41,21 @@ export default function ArenaLobby({ onSubmit }) {
 
 function Profile({ id }) {
   const t = useContext(TranslationContext);
-  const profile = presets.get(id);
+  //const profile = presets.get(id);
   return (
     <div className="profile">
       <Polaroid className="avatar" caption={false}>
         <AvatarImg id={id} />
       </Polaroid>
+      <div className="profile__info">
+        <h3 className="profile__name">
+          { t(`char.${id}.name`, { ns: 'bot' }) }
+        </h3>
+        <hr></hr>
+        <p className="profile__description">
+          { t(`char.${id}.desc`, { ns: 'bot' }) }
+        </p>
+      </div>
     </div>
   );
 }

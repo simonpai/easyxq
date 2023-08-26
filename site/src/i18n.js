@@ -10,7 +10,7 @@ i18n
   .init({
     lng: 'zh',
     fallbackLng: 'zh',
-    ns: ['common'],
+    ns: ['common', 'bot'],
     defaultNS: 'common',
     interpolation: {
       escapeValue: false, // not needed for React
