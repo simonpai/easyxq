@@ -10,22 +10,22 @@
     },
     "crab": {
       "name": "",
-      "desc": "Enjoys pinching you."
+      "desc": "Enjoys attacks."
     },
     "duckling": {
       "name": "",
       "desc": "Can do a bit of everything."
     },
     "tortoise": {
-      "name": "Franklin",
+      "name": "Doris",
       "desc": "Slow and steady."
     },
     "chihuahua": {
-      "name": "Gillian",
-      "desc": "Barks at everything."
+      "name": "Godchilla",
+      "desc": "Barks at everything but rather gutless."
     },
     "kitten": {
-      "name": "Kafka",
+      "name": "Careless Mimi",
       "desc": "Thinks about strange ideas all the time."
     }
   }

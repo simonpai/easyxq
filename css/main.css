@@ -162,40 +162,40 @@
 }
 
 .circled[data-char=A] {
-  transform: translateY(-2%);
+  transform: translate3d(0, -2%, 0);
 }
 .circled[data-char=E] {
-  transform: translate(3%, -4%);
+  transform: translate3d(3%, -4%, 0);
 }
 .circled[data-char=H] {
-  transform: translateY(-4%);
+  transform: translate3d(0, -4%, 0);
 }
 .circled[data-char=R] {
-  transform: translateY(-1%);
+  transform: translate3d(0, -1%, 0);
 }
 .circled[data-char=C] {
-  transform: translate(2%, -6%);
+  transform: translate3d(2%, -6%, 0);
 }
 .circled[data-char=P] {
-  transform: translate(1%, -4%);
+  transform: translate3d(1%, -4%, 0);
 }
 .circled[data-char=k] {
-  transform: translate(3%, -3%);
+  transform: translate3d(3%, -3%, 0);
 }
 .circled[data-char=a] {
-  transform: translateY(-2%);
+  transform: translate3d(0, -2%, 0);
 }
 .circled[data-char=e] {
-  transform: translate(-1%, -2%);
+  transform: translate3d(-1%, -2%, 0);
 }
 .circled[data-char=h] {
-  transform: translateY(-3%);
+  transform: translate3d(0, -3%, 0);
 }
 .circled[data-char=c] {
-  transform: translate(-3%, -3%);
+  transform: translate3d(-3%, -3%, 0);
 }
 .circled[data-char=p] {
-  transform: translate(1%, -2%);
+  transform: translate3d(1%, -2%, 0);
 }
 
 .piece {
@@ -699,6 +699,7 @@ ul.messages li.message .message__tail {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: radial-gradient(#444, #000);
 }
 
 footer {
@@ -756,6 +757,7 @@ body.page {
 .arena .lobby .lobby__bot-profile {
   grid-area: bot-profile;
   justify-self: start;
+  height: 65%;
 }
 .arena .lobby .lobby__bot-profile .avatar {
   width: 10rem;
@@ -812,6 +814,7 @@ body.page {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: radial-gradient(#444, #000);
 }
 
 .avatar .avatar__img {
@@ -824,6 +827,16 @@ body.page {
   height: 100%;
 }
 
+.profile .profile__info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.profile .profile__name {
+  text-align: center;
+  margin-bottom: 0;
+}
+
 html {
   height: 100%;
 }
@@ -831,6 +844,7 @@ html {
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Noto Sans TC", "蘋果儷中黑", "Apple LiGothic Medium", "微軟正黑體", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   background-color: #222;
+  color: #eee;
 }
 
 /*# sourceMappingURL=main.css.map */

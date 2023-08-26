@@ -1,31 +1,38 @@
 {
   "char": {
     "butterfly": {
-      "name": "威爾森",
+      "title": "蝴蝶",
+      "name": "西米露",
       "desc": "根本沒在想。"
     },
     "bunny": {
-      "name": "",
-      "desc": "動如脫兔。"
+      "title": "兔子",
+      "name": "麻糬",
+      "desc": "擅長逃跑。"
     },
     "crab": {
-      "name": "",
-      "desc": "最喜歡夾你。"
+      "title": "螃蟹",
+      "name": "卡滋",
+      "desc": "喜歡攻擊。"
     },
     "duckling": {
-      "name": "",
+      "title": "小鴨",
+      "name": "小短毛",
       "desc": "什麼都會一點。"
     },
     "tortoise": {
-      "name": "富蘭克林",
+      "title": "烏龜",
+      "name": "朵朵",
       "desc": "慢吞吞但是很仔細。"
     },
     "chihuahua": {
-      "name": "吉利安",
-      "desc": "突吉隊長。"
+      "title": "吉娃娃",
+      "name": "哥吉拉",
+      "desc": "看起來很兇，其實有點膽小。"
     },
     "kitten": {
-      "name": "卡夫卡",
+      "title": "小貓",
+      "name": "粗心米米",
       "desc": "總是在想些奇怪的事情。"
     }
   }
