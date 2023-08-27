@@ -1,4 +1,4 @@
-import { trimObj, removeItem, defineValues } from '@easyxq/commons';
+import { trimObj, removeItem, defineValues, PseudoRandom } from '@easyxq/commons';
 import { ROOM, COLOR, colors, calls as _calls, plies as _plies } from '../constant/index.js';
 import { Game } from '../model/index.js';
 import GameContext from './game-context.js';
@@ -45,6 +45,7 @@ export default class Room {
   #rawPlayers;
 
   // states
+  #random;
   #started;
   #state;
   #game;
@@ -61,18 +62,19 @@ export default class Room {
 
   // TODO: time
 
-  static start({ rules, players, game }) {
-    return new Room({ rules, players, game });
+  static start({ rules, players, game, seed }) {
+    return new Room({ rules, players, game, seed });
   }
 
-  static load({ rules, players, game, events }) {
-    return new Room({ rules, players, game: Game.load(game), events, started: true });
+  static load({ rules, players, game, seed, events }) {
+    return new Room({ rules, players, game: Game.load(game), seed, events, started: true });
   }
 
   constructor({
     rules,
     players = [{}, {}],
     game,
+    seed,
     events = [],
     started = false,
     //onError,
@@ -85,6 +87,8 @@ export default class Room {
     // rules -> context
     this.#context = new GameContext({ rules });
     this.#started = started; // TODO: shall become #stage
+
+    this.#random = new PseudoRandom(seed);
 
     // players
     this.#rawPlayers = players;
@@ -153,6 +157,7 @@ export default class Room {
       game: this.game.snapshot,
       events: this.events,
       started: this.#started,
+      seed: this.#random.state,
     });
   }
 
@@ -180,7 +185,8 @@ export default class Room {
 
   #emit(name, event) {
     const timestamp = Date.now();
-    event = Object.freeze({ name, timestamp, ...trimObj(event) });
+    const seed = this.#random.nextInt32();
+    event = Object.freeze({ name, timestamp, seed, ...trimObj(event) });
 
     const { length } = this.#events;
     const shallMerge = name === EVENT.RESUME && length > 0 && this.#events[length - 1].name === EVENT.RESUME;

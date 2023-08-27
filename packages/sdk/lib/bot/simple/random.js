@@ -1,4 +1,4 @@
-import { randomItem } from '@easyxq/commons';
+import { PseudoRandom } from '@easyxq/commons';
 import { GameContext } from '../../room/index.js';
 
 export default class RandomEngine {
@@ -9,7 +9,8 @@ export default class RandomEngine {
     this.#context = new GameContext({ rules });
   }
 
-  async next(game) {
+  async next(game, seed) {
+    const random = new PseudoRandom(seed);
     const plies = this.#context.queries(game.position).nextLegalPlies;
     const groups = Object.values(plies.reduce((groups, ply) => {
       const key = `${ply.pid}`;
@@ -17,7 +18,7 @@ export default class RandomEngine {
       return groups;
     }, {}));
 
-    return randomItem(randomItem(groups));
+    return random.select(random.select(groups));
   }
 
 }

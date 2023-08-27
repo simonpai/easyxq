@@ -18,18 +18,6 @@ export function sortBy(array, fn) {
   return array;
 }
 
-// Fisher–Yates
-export function shuffle(array) {
-  for (let i = array.length; i > 1;) {
-    const j = Math.floor(Math.random() * i);
-    i--;
-    if (i !== j) {
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-  return array;
-}
-
 /**
  * Find the index i such that arr[i - 1] <= value < arr[i].
  */

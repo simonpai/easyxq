@@ -15,6 +15,7 @@ export default class SimpleBot {
 
   #game;
   #index;
+  #seed;
 
   constructor(engine, { delay = 500, handle, debug, ...options } = {}) {
     this.#engine = engine;
@@ -68,38 +69,42 @@ export default class SimpleBot {
     }
   }
 
-  #onStart({ index, game }) {
+  #onStart({ index, seed, game }) {
     this.#game = Game.load(game);
     this.#index = index;
+    this.#seed = seed;
     this.#moveIfNecessary();
   }
 
-  #onMove({ index, ply, result }) {
+  #onMove({ index, seed, ply, result }) {
     ply = Ply.decode(ply);
     this.#game = this.#game.transit(ply, result);
     this.#index = index + 1;
+    this.#seed = seed;
     this.#moveIfNecessary();
   }
 
-  #onUndo({ index, count }) {
+  #onUndo({ index, seed, count }) {
     this.#game = this.#game.undo(count);
     this.#index = index - count;
+    this.#seed = seed;
     this.#moveIfNecessary();
   }
 
   #moveIfNecessary() {
     const index = this.#index;
     const game = this.#game;
+    const seed = this.#seed;
     if (game.position.color !== this.color || game.result) {
       return; // not my turn
     }
     const by = Date.now() + this.#delay;
-    setTimeout(() => this.#makeNextMove(index, game, by));
+    setTimeout(() => this.#makeNextMove(index, game, by, seed));
   }
 
-  async #makeNextMove(index, game, by) {
+  async #makeNextMove(index, game, by, seed) {
     const start = performance.now();
-    const ply = await this.#engine.next(game);
+    const ply = await this.#engine.next(game, seed);
     const cost = performance.now() - start;
 
     this.#debug && this.#debug(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);

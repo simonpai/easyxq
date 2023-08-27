@@ -1,4 +1,4 @@
-import { shuffle, sortBy } from '@easyxq/commons';
+import { PseudoRandom, sortBy } from '@easyxq/commons';
 import { GameContext } from '../../room/index.js';
 import Input from './input.js';
 
@@ -17,9 +17,10 @@ export default class HeuristicRandomEngine {
     this.#debug = debug;
   }
 
-  async next({ position, plies }) {
+  async next({ position, plies }, seed) {
+    const random = new PseudoRandom(seed);
     const context = this.#context;
-    const nextPlies = shuffle(context.queries(position).nextLegalPlies);
+    const nextPlies = random.shuffle(context.queries(position).nextLegalPlies);
     const lastPlies = plies.slice(-2);
     lastPlies.reverse();
     
@@ -41,7 +42,7 @@ export default class HeuristicRandomEngine {
           continue;
         }
         winningPly = ply;
-        if (Math.random() < (preferences.win || 1)) {
+        if (random.next() < (preferences.win || 1)) {
           useWinningPly = true;
           break;
         }
@@ -57,7 +58,7 @@ export default class HeuristicRandomEngine {
     }
 
     sortBy(entries, en => -en.score);
-    const entry = this.#select(entries);
+    const entry = this.#select(entries, random);
 
     this.#log(input, winningPly ? Infinity : entries[0].score, entry);
 
@@ -68,12 +69,12 @@ export default class HeuristicRandomEngine {
     return Math.round(this.#heuristic.evaluate(input));
   }
 
-  #select(entries) {
+  #select(entries, random) {
     const rate = 0.5;
     const minLevel = 1;
     for (const entry of entries) {
       const { score } = entry;
-      if (Math.random() > rate ** Math.max(minLevel, score / 100)) {
+      if (random.next() > rate ** Math.max(minLevel, score / 100)) {
         return entry;
       }
     }
