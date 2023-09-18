@@ -10,4 +10,4 @@ export * as pieces from './pieces.js';
 export * as colors from './colors.js';
 export * as coordinates from './coordinates.js';
 export * as calls from './calls.js';
-export * as plies from './plies.js';
+export * as zh from './zh.js';

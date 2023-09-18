@@ -31,10 +31,6 @@ export function en(color) {
   return validate(color) === RED ? 'red' : 'black';
 }
 
-export function zh(color) {
-  return validate(color) === RED ? '紅' : '黑';
-}
-
 export function mirror(color) {
   // optimize
   return color === RED ? BLACK : color === BLACK ? RED : color === BOTH ? BOTH : (() => { throw new Error(`Invalid color code: ${color}`); })();

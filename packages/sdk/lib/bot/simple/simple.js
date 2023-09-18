@@ -108,7 +108,6 @@ export default class SimpleBot {
     const cost = performance.now() - start;
 
     this.#debug && this.#debug(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);
-    //console.log(`[BOT] ${colors.en(this.#handle.color)}: ${ply} (${cost.toFixed(2)}ms)`);
 
     const delay = by - Date.now();
     if (delay > 0) {

@@ -1,5 +1,5 @@
 import { trimObj, removeItem, defineValues, PseudoRandom } from '@easyxq/commons';
-import { ROOM, COLOR, colors, calls as _calls, plies as _plies } from '../constant/index.js';
+import { ROOM, COLOR, colors, calls as _calls, zh } from '../constant/index.js';
 import { Game } from '../model/index.js';
 import GameContext from './game-context.js';
 import Player from './player.js';
@@ -245,7 +245,7 @@ export default class Room {
     const [position, ply, transitCalls, notation] = this.#context.transit(this.#game.position, from, to);
     let { result, calls = [], isInCheck: check } = this.#context.queries(position);
     this.#setGame(this.#game.transit(ply, result), transitCalls);
-    console.log(`[Transit] ${_plies.notate(position, ply)}`);
+    console.log(`[Transit] ${zh.formatPly(position, ply)}`);
 
     this.#emit(EVENT.MOVE, { index, ply: ply.code, calls, result, notation, check });
     if (result) {

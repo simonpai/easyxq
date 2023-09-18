@@ -4,12 +4,30 @@ import * as PIECE from './piece.js';
 import * as pieces from './pieces.js';
 import * as pids from './pids.js';
 
-export function notate(position, ply) {
+export function formatColor(color) {
+  return color === COLOR.RED ? '紅' : '黑';
+}
+
+const PIECE_LABELS = [
+  '仕', '相', '傌', '俥', '炮', '帥', '', '兵',
+  '士', '象', '馬', '車', '包', '將', '', '卒',
+]
+
+export function formatPiece(code) {
+  return PIECE_LABELS[code];
+}
+
+
+
+// TODO: formatPly uses board, which belongs to advanced models
+
+export function formatPly(position, ply) {
   const info = analyzeStackInfo(position, ply);
   return `${notatePiece(info)}${notateMovement(info)}`;
 }
 
-export function parse(position, notation) {
+export function parsePly(position, notation) {
+  // TODO
 }
 
 function analyzeStackInfo(position, ply) {
@@ -107,7 +125,7 @@ function notateFile(color, n) {
 }
 
 function notateFileOrPiece({ color, piece, file, disambiguation }) {
-  return disambiguation ? notateFile(color, file) : pieces.zh(piece);
+  return disambiguation ? notateFile(color, file) : formatPiece(piece);
 }
 
 function notateMovement({ color, from, to }) {
@@ -121,7 +139,7 @@ function notateMovement({ color, from, to }) {
 function notatePiece(info) {
   const { stack, color, piece, file } = info;
   return stack === 1 ?
-    `${pieces.zh(piece)}${notateFile(color, file)}` :
+    `${formatPiece(piece)}${notateFile(color, file)}` :
     `${notateOrdinal(info)}${notateFileOrPiece(info)}`;
 }
 

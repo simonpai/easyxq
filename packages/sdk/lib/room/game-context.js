@@ -1,4 +1,4 @@
-import { RULE, calls as _calls, plies as _plies } from '../constant/index.js';
+import { RULE, calls as _calls, zh } from '../constant/index.js';
 import Queries from '../query/index.js';
 import { Rules } from '../rule/index.js';
 
@@ -28,7 +28,7 @@ export default class GameContext {
     let calls = [...rules.apply('preMove', { position, from, to })];
 
     const ply = position.ply(from, to);
-    const notation = _plies.notate(position, ply);
+    const notation = zh.formatPly(position, ply);
     const preview = position.preview(ply);
 
     calls = [...calls, ...rules.apply('preTransit', { position, ply, preview })];

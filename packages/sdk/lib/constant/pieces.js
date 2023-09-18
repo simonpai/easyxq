@@ -150,17 +150,8 @@ const EN_LABELS = [
   'pawn',
 ];
 
-const ZH_LABELS = [
-  '仕', '相', '傌', '俥', '炮', '帥', '', '兵',
-  '士', '象', '馬', '車', '包', '將', '', '卒',
-]
-
 export function en(code) {
   return `${colors.en(color(code))} ${EN_LABELS[asRed(code)]}`;
-}
-
-export function zh(code) {
-  return ZH_LABELS[code];
 }
 
 export function format(code) {
